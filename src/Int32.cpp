@@ -6,7 +6,7 @@
 
 Int32::Int32() : value(0) {}
 
-Int32::Int32(uint32_t val) : value(val) {}
+Int32::Int32(int32_t val) : value(val) {}
 
 Int32::Int32(Int32 const &src) : value(src.value) {}
 
@@ -17,6 +17,6 @@ Int32 &Int32::operator=(Int32 const &rhs) {
     return *this;
 }
 
-IOperand const *Int32::make_self(uint32_t val) const {
+IOperand const *Int32::make_self(int32_t val) const {
     return new Int32(val);
 }

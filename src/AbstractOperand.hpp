@@ -7,6 +7,7 @@
 
 #include "OperandType.hpp"
 #include "IOperand.hpp"
+#include "StaticError.hpp"
 #include <type_traits>
 
 class Int8;
@@ -63,8 +64,6 @@ public:
                 return *this + static_cast<const Float &>(rhs);
             case eOperandType::DOUBLE:
                 return *this + static_cast<const Double &>(rhs);
-            default:
-
         }
     }
 

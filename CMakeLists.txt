@@ -19,4 +19,8 @@ add_executable(abstract-vm
         src/Int32.hpp
         src/StaticError.cpp
         src/StaticError.hpp
-        src/main.cpp)
+        src/main.cpp
+        src/Float.cpp
+        src/Float.hpp
+        src/Double.cpp
+        src/Double.hpp)

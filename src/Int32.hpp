@@ -9,16 +9,16 @@
 #include "OperandType.hpp"
 #include "AbstractOperand.hpp"
 
-class Int32 : public Int<eOperandType::INT_32, uint32_t> {
+class Int32 : public AbstractOperand<eOperandType::INT_32, int32_t> {
 public:
     Int32();
-    Int32(uint32_t val);
+    Int32(int32_t val);
     Int32(Int32 const &src);
     virtual ~Int32();
     Int32 &operator=(Int32 const &rhs);
 
 protected:
-    virtual IOperand const *make_self(uint32_t val) const;
+    virtual IOperand const *make_self(int32_t val) const;
 };
 
 
