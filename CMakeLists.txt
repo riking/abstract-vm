@@ -8,6 +8,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(abstract-vm
         src/main.cpp
+        src/Stack.cpp
+        src/Stack.hpp
 
         src/IOperand.hpp
         src/OperandType.hpp
@@ -31,5 +33,10 @@ add_executable(abstract-vm
         src/Div0Error.hpp
         src/PrintError.cpp
         src/PrintError.hpp
+        src/StackEmptyError.cpp
+        src/StackEmptyError.hpp
         src/StaticError.cpp
-        src/StaticError.hpp)
+        src/StaticError.hpp
+        src/StopExecution.cpp
+        src/StopExecution.hpp
+)

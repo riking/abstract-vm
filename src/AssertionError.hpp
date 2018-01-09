@@ -15,6 +15,9 @@
 class AssertionError : public std::exception {
 public:
     AssertionError();
+    /**
+     * Note: parameters do not need to live past construction
+     */
     AssertionError(IOperand const &expected, IOperand const &actual);
     AssertionError(AssertionError const &src);
     virtual ~AssertionError();

@@ -12,6 +12,7 @@
 
 #include <type_traits>
 #include <sstream>
+#include <cmath>
 
 class Int8;
 class Int16;
@@ -50,6 +51,21 @@ public:
         std::stringstream ss;
         ss << value;
         return *(new std::string(ss.str()));
+    }
+
+    virtual bool operator==(IOperand const &rhs) const {
+        if (this->getType() != rhs.getType()) {
+            return false;
+        }
+        auto const &casted_rhs = static_cast<AbstractOperand<Type, ValueT> const &>(rhs);
+
+        if (Type == eOperandType::FLOAT || Type == eOperandType::DOUBLE) {
+            if (isnan(this->value) && isnan(casted_rhs.value)) {
+                return true;
+            }
+        }
+
+        return !(this->value != casted_rhs.value);
     }
 
     template<eOperandType RhsOpType, typename RHSValueT>
