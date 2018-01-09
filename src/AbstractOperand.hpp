@@ -9,7 +9,9 @@
 #include "IOperand.hpp"
 #include "StaticError.hpp"
 #include "Div0Error.hpp"
+
 #include <type_traits>
+#include <sstream>
 
 class Int8;
 class Int16;
@@ -22,6 +24,8 @@ class AbstractOperand : public IOperand {
 public:
 
     ~AbstractOperand() {};
+
+    AbstractOperand(ValueT value) : value(value) {};
 
     virtual int getPrecision(void) const {
         if (Type == eOperandType::INT_8) {
@@ -40,6 +44,12 @@ public:
 
     virtual eOperandType getType(void) const {
         return Type;
+    }
+
+    virtual std::string const &toString(void) const {
+        std::stringstream ss;
+        ss << value;
+        return *(new std::string(ss.str()));
     }
 
     template<eOperandType RhsOpType, typename RHSValueT>

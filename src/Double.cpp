@@ -9,11 +9,11 @@
 #include "Int32.hpp"
 #include "Float.hpp"
 
-Double::Double() : value(0) {}
+Double::Double() : AbstractOperand(0.) {}
 
-Double::Double(double val) : value(val) {}
+Double::Double(double val) : AbstractOperand(val) {}
 
-Double::Double(Double const &src) : value(src.value) {}
+Double::Double(Double const &src) : AbstractOperand(src.value) {}
 
 Double::~Double() {}
 
@@ -26,7 +26,7 @@ IOperand const *Double::make_self(double val) const {
     return new Double(val);
 }
 
-virtual IOperand const *Double::operator+(IOperand const &rhs) const {
+IOperand const *Double::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:
             return *this + static_cast<const Int8 &>(rhs);
@@ -41,7 +41,7 @@ virtual IOperand const *Double::operator+(IOperand const &rhs) const {
     }
 }
 
-virtual IOperand const *Double::operator-(IOperand const &rhs) const {
+IOperand const *Double::operator-(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:
             return *this - static_cast<const Int8 &>(rhs);
@@ -56,7 +56,7 @@ virtual IOperand const *Double::operator-(IOperand const &rhs) const {
     }
 }
 
-virtual IOperand const *Double::operator*(IOperand const &rhs) const {
+IOperand const *Double::operator*(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:
             return *this * static_cast<const Int8 &>(rhs);
@@ -71,7 +71,7 @@ virtual IOperand const *Double::operator*(IOperand const &rhs) const {
     }
 }
 
-virtual IOperand const *Double::operator/(IOperand const &rhs) const {
+IOperand const *Double::operator/(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:
             return *this / static_cast<const Int8 &>(rhs);
@@ -86,7 +86,7 @@ virtual IOperand const *Double::operator/(IOperand const &rhs) const {
     }
 }
 
-virtual IOperand const *Double::operator%(IOperand const &rhs) const {
+IOperand const *Double::operator%(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:
             return *this % static_cast<const Int8 &>(rhs);

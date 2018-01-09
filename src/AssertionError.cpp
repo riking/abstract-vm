@@ -23,6 +23,6 @@ AssertionError &AssertionError::operator=(AssertionError const &rhs) {
     return *this;
 }
 
-const char *AssertionError::what() const {
+const char *AssertionError::what() const throw() {
     return reason_.c_str();
 }

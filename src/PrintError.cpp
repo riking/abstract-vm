@@ -35,6 +35,6 @@ PrintError &PrintError::operator=(PrintError const &rhs) {
     return *this;
 }
 
-const char *PrintError::what() const {
+const char *PrintError::what() const throw() {
     return reason_.c_str();
 }
