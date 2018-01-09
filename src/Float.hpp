@@ -16,6 +16,12 @@ public:
     virtual ~Float();
     Float &operator=(Float const &rhs);
 
+    virtual IOperand const *operator+(IOperand const &rhs) const;
+    virtual IOperand const *operator-(IOperand const &rhs) const;
+    virtual IOperand const *operator*(IOperand const &rhs) const;
+    virtual IOperand const *operator/(IOperand const &rhs) const;
+    virtual IOperand const *operator%(IOperand const &rhs) const;
+
 protected:
     virtual IOperand const *make_self(float val) const;
 };

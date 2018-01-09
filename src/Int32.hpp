@@ -17,6 +17,12 @@ public:
     virtual ~Int32();
     Int32 &operator=(Int32 const &rhs);
 
+    virtual IOperand const *operator+(IOperand const &rhs) const;
+    virtual IOperand const *operator-(IOperand const &rhs) const;
+    virtual IOperand const *operator*(IOperand const &rhs) const;
+    virtual IOperand const *operator/(IOperand const &rhs) const;
+    virtual IOperand const *operator%(IOperand const &rhs) const;
+
 protected:
     virtual IOperand const *make_self(int32_t val) const;
 };

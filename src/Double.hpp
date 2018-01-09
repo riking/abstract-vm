@@ -16,6 +16,12 @@ public:
     virtual ~Double();
     Double &operator=(Double const &rhs);
 
+    virtual IOperand const *operator+(IOperand const &rhs) const;
+    virtual IOperand const *operator-(IOperand const &rhs) const;
+    virtual IOperand const *operator*(IOperand const &rhs) const;
+    virtual IOperand const *operator/(IOperand const &rhs) const;
+    virtual IOperand const *operator%(IOperand const &rhs) const;
+
 protected:
     virtual IOperand const *make_self(double val) const;
 };

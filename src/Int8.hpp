@@ -16,6 +16,12 @@ public:
     virtual ~Int8();
     Int8 &operator=(Int8 const &rhs);
 
+    virtual IOperand const *operator+(IOperand const &rhs) const;
+    virtual IOperand const *operator-(IOperand const &rhs) const;
+    virtual IOperand const *operator*(IOperand const &rhs) const;
+    virtual IOperand const *operator/(IOperand const &rhs) const;
+    virtual IOperand const *operator%(IOperand const &rhs) const;
+
 protected:
     virtual IOperand const *make_self(int8_t val) const;
 };

@@ -17,6 +17,12 @@ public:
     virtual ~Int16();
     Int16 &operator=(Int16 const &rhs);
 
+    virtual IOperand const *operator+(IOperand const &rhs) const;
+    virtual IOperand const *operator-(IOperand const &rhs) const;
+    virtual IOperand const *operator*(IOperand const &rhs) const;
+    virtual IOperand const *operator/(IOperand const &rhs) const;
+    virtual IOperand const *operator%(IOperand const &rhs) const;
+
 protected:
     virtual IOperand const *make_self(int16_t val) const;
 };
