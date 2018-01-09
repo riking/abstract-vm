@@ -5,4 +5,12 @@
 #ifndef PROJECT_OPERANDTYPE_HPP
 #define PROJECT_OPERANDTYPE_HPP
 
+enum class eOperandType {
+    INT_8,
+    INT_16,
+    INT_32,
+    FLOAT,
+    DOUBLE,
+};
+
 #endif //PROJECT_OPERANDTYPE_HPP

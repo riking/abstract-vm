@@ -6,7 +6,9 @@
 #define PROJECT_STATICERROR_HPP
 
 
-class StaticError {
+#include <exception>
+
+class StaticError : public std::exception {
 
 };
 
