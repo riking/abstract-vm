@@ -12,14 +12,13 @@
  * An error caused via dividing by zero.
  */
 class Div0Error : public std::exception {
-public:
+   public:
     Div0Error();
     Div0Error(Div0Error const &src);
     virtual ~Div0Error();
     Div0Error &operator=(Div0Error const &rhs);
 
-    const char * what() const throw();
+    const char *what() const throw();
 };
 
-
-#endif //ABSTRACTVM_DIV0ERROR_HPP
+#endif  // ABSTRACTVM_DIV0ERROR_HPP

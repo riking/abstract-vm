@@ -8,11 +8,10 @@ Token::Token() : source(""), column(-1) {}
 
 Token::~Token() {}
 
-Token::Token(unsigned long lineno, std::string source, signed long column) : lineno(lineno), source(source), column(column) {}
+Token::Token(unsigned long lineno, std::string source, signed long column)
+    : lineno(lineno), source(source), column(column) {}
 
-Token::Token(const Token &src) {
-    *this = src;
-}
+Token::Token(const Token &src) { *this = src; }
 
 Token &Token::operator=(Token const &rhs) {
     this->lineno = rhs.lineno;
@@ -21,21 +20,13 @@ Token &Token::operator=(Token const &rhs) {
     return *this;
 }
 
-unsigned long Token::GetLine() const {
-    return lineno;
-}
+unsigned long Token::GetLine() const { return lineno; }
 
-signed long Token::GetColumn() const {
-    return column;
-}
+signed long Token::GetColumn() const { return column; }
 
-unsigned long Token::GetLength() const {
-    return source.size();
-}
+unsigned long Token::GetLength() const { return source.size(); }
 
-const std::string& Token::GetSource() const {
-    return source;
-}
+const std::string &Token::GetSource() const { return source; }
 
 Token *Token::SubToken(unsigned long offset, unsigned long len) const {
     return new Token(lineno, source.substr(offset, len), column + offset);

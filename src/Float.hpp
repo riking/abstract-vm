@@ -9,7 +9,7 @@
 #include "OperandType.hpp"
 
 class Float : public AbstractOperand<eOperandType::FLOAT, float> {
-public:
+   public:
     Float();
     Float(float val);
     Float(Float const &src);
@@ -22,10 +22,8 @@ public:
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
 
-protected:
+   protected:
     virtual IOperand const *make_self(float val) const;
 };
 
-
-
-#endif //PROJECT_FLOAT_HPP
+#endif  // PROJECT_FLOAT_HPP

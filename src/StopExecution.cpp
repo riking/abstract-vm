@@ -14,6 +14,4 @@ StopExecution &StopExecution::operator=(StopExecution const &rhs) {
     return *this;
 }
 
-const char *StopExecution::what() const throw() {
-    return "Exit";
-}
+const char *StopExecution::what() const throw() { return "Exit"; }

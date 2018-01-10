@@ -12,14 +12,13 @@
  * Special error to cleanly exit.
  */
 class StopExecution : public std::exception {
-public:
+   public:
     StopExecution();
     StopExecution(StopExecution const &src);
     virtual ~StopExecution();
     StopExecution &operator=(StopExecution const &rhs);
 
-    const char * what() const throw();
+    const char *what() const throw();
 };
 
-
-#endif // ABSTRACTVM_STOPEXECUTION_HPP
+#endif  // ABSTRACTVM_STOPEXECUTION_HPP

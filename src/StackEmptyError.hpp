@@ -12,14 +12,13 @@
  * An error caused via popping values from an empty stack.
  */
 class StackEmptyError : public std::exception {
-public:
+   public:
     StackEmptyError();
     StackEmptyError(StackEmptyError const &src);
     virtual ~StackEmptyError();
     StackEmptyError &operator=(StackEmptyError const &rhs);
 
-    const char * what() const throw();
+    const char *what() const throw();
 };
 
-
-#endif // ABSTRACTVM_STACKEMPTYERROR_HPP
+#endif  // ABSTRACTVM_STACKEMPTYERROR_HPP

@@ -5,17 +5,11 @@
 #include "Stack.hpp"
 #include "Int8.hpp"
 
-Stack::Stack() : stack_() {
+Stack::Stack() : stack_() {}
 
-}
+Stack::Stack(Stack const &src) : stack_() { (*this) = src; }
 
-Stack::Stack(Stack const &src) : stack_() {
-    (*this) = src;
-}
-
-Stack::~Stack() {
-    this->empty_();
-}
+Stack::~Stack() { this->empty_(); }
 
 void Stack::empty_() {
     while (this->stack_.size()) {
@@ -39,9 +33,7 @@ Stack &Stack::operator=(Stack const &rhs) {
     return *this;
 }
 
-void Stack::Push(const IOperand &value) {
-    stack_.push_back(&value);
-}
+void Stack::Push(const IOperand &value) { stack_.push_back(&value); }
 
 void Stack::Pop() throw(StackEmptyError) {
     if (stack_.size() == 0) {
@@ -63,13 +55,13 @@ void Stack::Assert(const IOperand &value) throw(AssertionError) {
     if (stack_.size() == 0) {
         throw new StackEmptyError();
     }
-    const IOperand *op = stack_.back(); // do not delete
+    const IOperand *op = stack_.back();  // do not delete
     if (op->getType() != value.getType()) {
         throw new AssertionError(value, *op);
     }
 
-    const AbstractOperand &expected = static_cast<AbstractOperand&>(value);
-    const AbstractOperand &actual = static_cast<AbstractOperand&>(*op);
+    const AbstractOperand &expected = static_cast<AbstractOperand &>(value);
+    const AbstractOperand &actual = static_cast<AbstractOperand &>(*op);
 
     if (!(expected == actual)) {
         throw new AssertionError(expected, actual);
@@ -157,7 +149,7 @@ void Stack::Print(std::ostream &out) throw(PrintError) {
     if (op->getType() != eOperandType::INT_8) {
         throw new PrintError(op->getType());
     }
-    const Int8 &i = *(static_cast<const Int8*>(op));
+    const Int8 &i = *(static_cast<const Int8 *>(op));
     const int8_t val = i.GetInt8();
 
     out << char(val);

@@ -8,14 +8,14 @@
 #include <vector>
 
 #include "AssertionError.hpp"
-#include "IOperand.hpp"
-#include "StackEmptyError.hpp"
 #include "Div0Error.hpp"
-#include "StopExecution.hpp"
+#include "IOperand.hpp"
 #include "PrintError.hpp"
+#include "StackEmptyError.hpp"
+#include "StopExecution.hpp"
 
 class Stack {
-public:
+   public:
     Stack();
     Stack(Stack const &src);
     virtual ~Stack();
@@ -33,11 +33,10 @@ public:
     void Print(std::ostream &out) throw(PrintError);
     void Exit() throw(StopExecution);
 
-private:
+   private:
     void empty_();
 
-    std::vector<const IOperand*> stack_;
+    std::vector<const IOperand *> stack_;
 };
 
-
-#endif //PROJECT_STACK_HPP
+#endif  // PROJECT_STACK_HPP

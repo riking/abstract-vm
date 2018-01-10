@@ -5,11 +5,11 @@
 #ifndef ABSTRACTVM_INT8_HPP
 #define ABSTRACTVM_INT8_HPP
 
-#include "OperandType.hpp"
 #include "AbstractOperand.hpp"
+#include "OperandType.hpp"
 
 class Int8 : public AbstractOperand<eOperandType::INT_8, int8_t> {
-public:
+   public:
     Int8();
     Int8(int8_t val);
     Int8(Int8 const &src);
@@ -24,9 +24,8 @@ public:
 
     int8_t GetInt8() const;
 
-protected:
+   protected:
     virtual IOperand const *make_self(int8_t val) const;
 };
 
-
-#endif // ABSTRACTVM_INT8_HPP
+#endif  // ABSTRACTVM_INT8_HPP

@@ -19,6 +19,4 @@ StaticError &StaticError::operator=(StaticError const &rhs) {
     return *this;
 }
 
-const char *StaticError::what() const throw() {
-    return this->reason_.c_str();
-}
+const char *StaticError::what() const throw() { return this->reason_.c_str(); }

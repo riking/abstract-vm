@@ -5,12 +5,11 @@
 #ifndef ABSTRACTVM_INT16_HPP
 #define ABSTRACTVM_INT16_HPP
 
-
-#include "OperandType.hpp"
 #include "AbstractOperand.hpp"
+#include "OperandType.hpp"
 
 class Int16 : public AbstractOperand<eOperandType::INT_16, int16_t> {
-public:
+   public:
     Int16();
     Int16(int16_t val);
     Int16(Int16 const &src);
@@ -23,9 +22,8 @@ public:
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
 
-protected:
+   protected:
     virtual IOperand const *make_self(int16_t val) const;
 };
 
-
-#endif // ABSTRACTVM_INT16_HPP
+#endif  // ABSTRACTVM_INT16_HPP

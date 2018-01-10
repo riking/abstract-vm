@@ -4,10 +4,10 @@
 
 #include "Int8.hpp"
 
+#include "Double.hpp"
+#include "Float.hpp"
 #include "Int16.hpp"
 #include "Int32.hpp"
-#include "Float.hpp"
-#include "Double.hpp"
 
 Int8::Int8() : AbstractOperand(0) {}
 
@@ -22,9 +22,7 @@ Int8 &Int8::operator=(Int8 const &rhs) {
     return *this;
 }
 
-IOperand const *Int8::make_self(int8_t val) const {
-    return new Int8(val);
-}
+IOperand const *Int8::make_self(int8_t val) const { return new Int8(val); }
 
 IOperand const *Int8::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {

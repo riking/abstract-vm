@@ -13,7 +13,7 @@
  * An error caused via an 'assert' instruction.
  */
 class AssertionError : public std::exception {
-public:
+   public:
     AssertionError();
     /**
      * Note: parameters do not need to live past construction
@@ -23,11 +23,10 @@ public:
     virtual ~AssertionError();
     AssertionError &operator=(AssertionError const &rhs);
 
-    const char * what() const throw();
+    const char *what() const throw();
 
-private:
+   private:
     std::string reason_;
 };
 
-
-#endif //ABSTRACTVM_ASSERTIONERROR_HPP
+#endif  // ABSTRACTVM_ASSERTIONERROR_HPP

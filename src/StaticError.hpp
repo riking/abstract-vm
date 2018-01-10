@@ -12,19 +12,18 @@
  * An error caused independent of the input.
  */
 class StaticError : public std::exception {
-public:
+   public:
     StaticError();
-    StaticError(const char * reason);
+    StaticError(const char *reason);
     StaticError(std::string reason);
     StaticError(StaticError const &src);
     virtual ~StaticError();
     StaticError &operator=(StaticError const &rhs);
 
-    const char * what() const throw();
+    const char *what() const throw();
 
-private:
+   private:
     std::string reason_;
 };
 
-
-#endif //PROJECT_STATICERROR_HPP
+#endif  // PROJECT_STATICERROR_HPP

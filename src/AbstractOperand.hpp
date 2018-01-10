@@ -5,14 +5,14 @@
 #ifndef PROJECT_INT_HPP
 #define PROJECT_INT_HPP
 
-#include "OperandType.hpp"
-#include "IOperand.hpp"
-#include "StaticError.hpp"
 #include "Div0Error.hpp"
+#include "IOperand.hpp"
+#include "OperandType.hpp"
+#include "StaticError.hpp"
 
-#include <type_traits>
-#include <sstream>
 #include <cmath>
+#include <sstream>
+#include <type_traits>
 
 class Int8;
 class Int16;
@@ -20,13 +20,12 @@ class Int32;
 class Float;
 class Double;
 
-template<eOperandType Type, typename ValueT>
+template <eOperandType Type, typename ValueT>
 class AbstractOperand : public IOperand {
-public:
+   public:
+    ~AbstractOperand(){};
 
-    ~AbstractOperand() {};
-
-    AbstractOperand(ValueT value) : value(value) {};
+    AbstractOperand(ValueT value) : value(value){};
 
     virtual int getPrecision(void) const {
         if (Type == eOperandType::INT_8) {
@@ -43,9 +42,7 @@ public:
         return 0;
     }
 
-    virtual eOperandType getType(void) const {
-        return Type;
-    }
+    virtual eOperandType getType(void) const { return Type; }
 
     virtual std::string const &toString(void) const {
         std::stringstream ss;
@@ -57,7 +54,8 @@ public:
         if (this->getType() != rhs.getType()) {
             return false;
         }
-        auto const &casted_rhs = static_cast<AbstractOperand<Type, ValueT> const &>(rhs);
+        auto const &casted_rhs =
+            static_cast<AbstractOperand<Type, ValueT> const &>(rhs);
 
         if (Type == eOperandType::FLOAT || Type == eOperandType::DOUBLE) {
             if (isnan(this->value) && isnan(casted_rhs.value)) {
@@ -68,74 +66,78 @@ public:
         return !(this->value != casted_rhs.value);
     }
 
-    template<eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator+(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    template <eOperandType RhsOpType, typename RHSValueT>
+    IOperand const *operator+(
+        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (this->getPrecision() > rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT) this->value) + rhs.value;
+            RHSValueT new_value_r = ((RHSValueT)this->value) + rhs.value;
             return rhs.make_self(new_value_r);
         } else {
-            ValueT new_value_s = this->value + ((ValueT) rhs.value);
+            ValueT new_value_s = this->value + ((ValueT)rhs.value);
             return this->make_self(new_value_s);
         }
     }
 
-    template<eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator-(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    template <eOperandType RhsOpType, typename RHSValueT>
+    IOperand const *operator-(
+        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (this->getPrecision() > rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT) this->value) - rhs.value;
+            RHSValueT new_value_r = ((RHSValueT)this->value) - rhs.value;
             return rhs.make_self(new_value_r);
         } else {
-            ValueT new_value_s = this->value - ((ValueT) rhs.value);
+            ValueT new_value_s = this->value - ((ValueT)rhs.value);
             return this->make_self(new_value_s);
         }
     }
 
-    template<eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator*(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    template <eOperandType RhsOpType, typename RHSValueT>
+    IOperand const *operator*(
+        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (this->getPrecision() > rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT) this->value) * rhs.value;
+            RHSValueT new_value_r = ((RHSValueT)this->value) * rhs.value;
             return rhs.make_self(new_value_r);
         } else {
-            ValueT new_value_s = this->value * ((ValueT) rhs.value);
+            ValueT new_value_s = this->value * ((ValueT)rhs.value);
             return this->make_self(new_value_s);
         }
     }
 
-    template<eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator/(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    template <eOperandType RhsOpType, typename RHSValueT>
+    IOperand const *operator/(
+        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (rhs.value == 0) {
             throw new Div0Error();
         }
 
         if (this->getPrecision() > rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT) this->value) / rhs.value;
+            RHSValueT new_value_r = ((RHSValueT)this->value) / rhs.value;
             return rhs.make_self(new_value_r);
         } else {
-            ValueT new_value_s = this->value / ((ValueT) rhs.value);
+            ValueT new_value_s = this->value / ((ValueT)rhs.value);
             return this->make_self(new_value_s);
         }
     }
 
-    template<eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator%(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    template <eOperandType RhsOpType, typename RHSValueT>
+    IOperand const *operator%(
+        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (rhs.value == 0) {
             throw new Div0Error();
         }
 
         if (this->getPrecision() > rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT) this->value) % rhs.value;
+            RHSValueT new_value_r = ((RHSValueT)this->value) % rhs.value;
             return rhs.make_self(new_value_r);
         } else {
-            ValueT new_value_s = this->value % ((ValueT) rhs.value);
+            ValueT new_value_s = this->value % ((ValueT)rhs.value);
             return this->make_self(new_value_s);
         }
     }
 
-protected:
+   protected:
     ValueT value;
 
     virtual IOperand const *make_self(ValueT value) const = 0;
 };
 
-
-#endif //PROJECT_INT_HPP
+#endif  // PROJECT_INT_HPP

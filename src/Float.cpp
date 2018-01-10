@@ -4,10 +4,10 @@
 
 #include "Float.hpp"
 
-#include "Int8.hpp"
+#include "Double.hpp"
 #include "Int16.hpp"
 #include "Int32.hpp"
-#include "Double.hpp"
+#include "Int8.hpp"
 
 Float::Float() : AbstractOperand(0.f) {}
 
@@ -22,9 +22,7 @@ Float &Float::operator=(Float const &rhs) {
     return *this;
 }
 
-IOperand const *Float::make_self(float val) const {
-    return new Float(val);
-}
+IOperand const *Float::make_self(float val) const { return new Float(val); }
 
 IOperand const *Float::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {

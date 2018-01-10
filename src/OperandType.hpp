@@ -13,4 +13,4 @@ enum class eOperandType {
     DOUBLE,
 };
 
-#endif //PROJECT_OPERANDTYPE_HPP
+#endif  // PROJECT_OPERANDTYPE_HPP

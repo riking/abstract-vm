@@ -15,15 +15,20 @@ PrintError::PrintError(eOperandType actual) {
     ss << "Print failed: need Int8, got ";
     switch (actual) {
         case eOperandType::INT_8:
-            ss << "<BAD>"; break;
+            ss << "<BAD>";
+            break;
         case eOperandType::INT_16:
-            ss << "Int16"; break;
+            ss << "Int16";
+            break;
         case eOperandType::INT_32:
-            ss << "Int32"; break;
+            ss << "Int32";
+            break;
         case eOperandType::FLOAT:
-            ss << "Float"; break;
+            ss << "Float";
+            break;
         case eOperandType::DOUBLE:
-            ss << "Double"; break;
+            ss << "Double";
+            break;
     }
     this->reason_ = ss.str();
 }
@@ -35,6 +40,4 @@ PrintError &PrintError::operator=(PrintError const &rhs) {
     return *this;
 }
 
-const char *PrintError::what() const throw() {
-    return reason_.c_str();
-}
+const char *PrintError::what() const throw() { return reason_.c_str(); }

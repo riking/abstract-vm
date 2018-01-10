@@ -13,18 +13,17 @@
  * An error caused via a 'print' instruction.
  */
 class PrintError : public std::exception {
-public:
+   public:
     PrintError();
     PrintError(eOperandType actual);
     PrintError(PrintError const &src);
     virtual ~PrintError();
     PrintError &operator=(PrintError const &rhs);
 
-    const char * what() const throw();
+    const char *what() const throw();
 
-private:
+   private:
     std::string reason_;
 };
 
-
-#endif // ABSTRACTVM_PRINTERROR_HPP
+#endif  // ABSTRACTVM_PRINTERROR_HPP

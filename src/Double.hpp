@@ -9,7 +9,7 @@
 #include "OperandType.hpp"
 
 class Double : public AbstractOperand<eOperandType::DOUBLE, double> {
-public:
+   public:
     Double();
     Double(double val);
     Double(Double const &src);
@@ -22,10 +22,8 @@ public:
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
 
-protected:
+   protected:
     virtual IOperand const *make_self(double val) const;
 };
 
-
-
-#endif //PROJECT_DOUBLE_HPP
+#endif  // PROJECT_DOUBLE_HPP

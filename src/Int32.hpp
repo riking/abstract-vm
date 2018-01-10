@@ -5,12 +5,11 @@
 #ifndef ABSTRACTVM_INT32_HPP
 #define ABSTRACTVM_INT32_HPP
 
-
-#include "OperandType.hpp"
 #include "AbstractOperand.hpp"
+#include "OperandType.hpp"
 
 class Int32 : public AbstractOperand<eOperandType::INT_32, int32_t> {
-public:
+   public:
     Int32();
     Int32(int32_t val);
     Int32(Int32 const &src);
@@ -23,9 +22,8 @@ public:
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
 
-protected:
+   protected:
     virtual IOperand const *make_self(int32_t val) const;
 };
 
-
-#endif // ABSTRACTVM_INT32_HPP
+#endif  // ABSTRACTVM_INT32_HPP

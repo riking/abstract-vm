@@ -2,9 +2,9 @@
 // Created by Kane York on 1/9/18.
 //
 
-#include <sstream>
-#include <iomanip>
 #include "WrappedError.hpp"
+#include <iomanip>
+#include <sstream>
 
 WrappedError::WrappedError() : msg("Empty WrappedError") {
     msg = "Empty WrappedError";
@@ -18,7 +18,8 @@ WrappedError::WrappedError(std::exception wrapped) {
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(std::exception wrapped, std::string error_line, int lineno) {
+WrappedError::WrappedError(std::exception wrapped, std::string error_line,
+                           int lineno) {
     std::stringstream ss;
     ss << "Error on line " << lineno << ":" << std::endl;
     ss << std::setw(4) << lineno;
@@ -27,12 +28,14 @@ WrappedError::WrappedError(std::exception wrapped, std::string error_line, int l
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(std::exception wrapped, std::string error_line, Token phrase) {
+WrappedError::WrappedError(std::exception wrapped, std::string error_line,
+                           Token phrase) {
     std::stringstream ss;
 
     signed long col = phrase.GetColumn();
     if (col < 0) {
-        ss << "Error on line " << phrase.GetLine() << " at '" << phrase.GetSource() << "':" << std::endl;
+        ss << "Error on line " << phrase.GetLine() << " at '"
+           << phrase.GetSource() << "':" << std::endl;
         ss << std::setw(4) << phrase.GetLine();
         ss << " " << error_line << std::endl;
     } else {
@@ -40,7 +43,7 @@ WrappedError::WrappedError(std::exception wrapped, std::string error_line, Token
         ss << std::setw(4) << phrase.GetLine();
         ss << " ";
         ss << error_line.substr(0, (unsigned long)col);
-        ss << "\027[1;31m"; // red
+        ss << "\027[1;31m";  // red
         ss << error_line.substr((unsigned long)col, len);
         ss << "\027[0m";
         ss << error_line.substr(col + len, std::string::npos);
@@ -51,7 +54,7 @@ WrappedError::WrappedError(std::exception wrapped, std::string error_line, Token
         for (int i = 0; i < col; i++) {
             ss << " ";
         }
-        ss << "\027[1;34m"; // blue
+        ss << "\027[1;34m";  // blue
         ss << "^";
         for (int i = 0; i < len - 1; i++) {
             ss << "~";
@@ -63,15 +66,11 @@ WrappedError::WrappedError(std::exception wrapped, std::string error_line, Token
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(WrappedError const &src) {
-    *this = src;
-}
+WrappedError::WrappedError(WrappedError const &src) { *this = src; }
 
 WrappedError &WrappedError::operator=(WrappedError const &rhs) {
     this->msg = rhs.msg;
     return *this;
 }
 
-const char *WrappedError::what() const throw() {
-    return msg.c_str();
-}
+const char *WrappedError::what() const throw() { return msg.c_str(); }
