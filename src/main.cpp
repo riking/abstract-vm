@@ -2,11 +2,17 @@
 // Created by Kane York on 1/9/18.
 //
 
-#include "Int8.hpp"
-#include "Int16.hpp"
-#include "Int32.hpp"
+#include <iostream>
 
-int main() {
-    Int32 a;
+#include "StopExecution.hpp"
+#include "WrappedError.hpp"
 
+int main(int argc, char **argv) {
+    try {
+
+    } catch (StopExecution) {
+        return 0;
+    } catch (WrappedError e) {
+        std::cerr << e.what() << std::endl;
+    }
 }

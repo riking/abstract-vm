@@ -39,4 +39,4 @@ add_executable(abstract-vm
         src/StaticError.hpp
         src/StopExecution.cpp
         src/StopExecution.hpp
-)
+        src/WrappedError.cpp src/WrappedError.hpp src/Token.cpp src/Token.hpp)
