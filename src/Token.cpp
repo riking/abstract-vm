@@ -3,12 +3,16 @@
 //
 
 #include "Token.hpp"
+#include "StaticError.hpp"
 
 Token::Token() : source(""), column(-1) {}
 
 Token::~Token() {}
 
-Token::Token(unsigned long lineno, std::string source, signed long column)
+Token::Token(size_t lineno, std::string source)
+    : lineno(lineno), source(source), column(0) {}
+
+Token::Token(size_t lineno, std::string source, ssize_t column)
     : lineno(lineno), source(source), column(column) {}
 
 Token::Token(const Token &src) { *this = src; }
@@ -28,6 +32,9 @@ unsigned long Token::GetLength() const { return source.size(); }
 
 const std::string &Token::GetSource() const { return source; }
 
-Token *Token::SubToken(unsigned long offset, unsigned long len) const {
-    return new Token(lineno, source.substr(offset, len), column + offset);
+std::unique_ptr<Token> Token::SubToken(ssize_t offset, ssize_t len) const {
+    if (offset < 0 || len < 0) {
+        throw StaticError("Negative values as input to SubToken");
+    }
+    return std::make_unique<Token>(lineno, source.substr(offset, len), column + offset);
 }

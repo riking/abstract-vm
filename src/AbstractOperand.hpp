@@ -69,7 +69,7 @@ class AbstractOperand : public IOperand {
     template <eOperandType RhsOpType, typename RHSValueT>
     IOperand const *operator+(
         AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (this->getPrecision() > rhs.getPrecision()) {
+        if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) + rhs.value;
             return rhs.make_self(new_value_r);
         } else {
@@ -81,7 +81,7 @@ class AbstractOperand : public IOperand {
     template <eOperandType RhsOpType, typename RHSValueT>
     IOperand const *operator-(
         AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (this->getPrecision() > rhs.getPrecision()) {
+        if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) - rhs.value;
             return rhs.make_self(new_value_r);
         } else {
@@ -93,7 +93,7 @@ class AbstractOperand : public IOperand {
     template <eOperandType RhsOpType, typename RHSValueT>
     IOperand const *operator*(
         AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (this->getPrecision() > rhs.getPrecision()) {
+        if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) * rhs.value;
             return rhs.make_self(new_value_r);
         } else {
@@ -106,10 +106,10 @@ class AbstractOperand : public IOperand {
     IOperand const *operator/(
         AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (rhs.value == 0) {
-            throw new Div0Error();
+            throw Div0Error();
         }
 
-        if (this->getPrecision() > rhs.getPrecision()) {
+        if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) / rhs.value;
             return rhs.make_self(new_value_r);
         } else {
@@ -122,10 +122,10 @@ class AbstractOperand : public IOperand {
     IOperand const *operator%(
         AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (rhs.value == 0) {
-            throw new Div0Error();
+            throw Div0Error();
         }
 
-        if (this->getPrecision() > rhs.getPrecision()) {
+        if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) % rhs.value;
             return rhs.make_self(new_value_r);
         } else {

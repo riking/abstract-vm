@@ -37,7 +37,7 @@ void Stack::Push(const IOperand &value) { stack_.push_back(&value); }
 
 void Stack::Pop() throw(StackEmptyError) {
     if (stack_.size() == 0) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
     const IOperand *op = stack_.back();
     stack_.pop_back();
@@ -51,20 +51,17 @@ void Stack::Dump(std::ostream &out) const {
     }
 }
 
-void Stack::Assert(const IOperand &value) throw(AssertionError) {
+void Stack::Assert(const IOperand &expected) throw(AssertionError) {
     if (stack_.size() == 0) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
-    const IOperand *op = stack_.back();  // do not delete
-    if (op->getType() != value.getType()) {
-        throw new AssertionError(value, *op);
+    const IOperand &actual = *(stack_.back());  // do not delete
+    if (actual.getType() != expected.getType()) {
+        throw AssertionError(expected, actual);
     }
-
-    const AbstractOperand &expected = static_cast<AbstractOperand &>(value);
-    const AbstractOperand &actual = static_cast<AbstractOperand &>(*op);
 
     if (!(expected == actual)) {
-        throw new AssertionError(expected, actual);
+        throw AssertionError(expected, actual);
     }
     // OK
     return;
@@ -72,7 +69,7 @@ void Stack::Assert(const IOperand &value) throw(AssertionError) {
 
 void Stack::Add() {
     if (stack_.size() < 2) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
     const IOperand *rhs = stack_.back();
     stack_.pop_back();
@@ -86,7 +83,7 @@ void Stack::Add() {
 
 void Stack::Sub() {
     if (stack_.size() < 2) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
     const IOperand *rhs = stack_.back();
     stack_.pop_back();
@@ -100,7 +97,7 @@ void Stack::Sub() {
 
 void Stack::Mul() {
     if (stack_.size() < 2) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
     const IOperand *rhs = stack_.back();
     stack_.pop_back();
@@ -114,7 +111,7 @@ void Stack::Mul() {
 
 void Stack::Div() throw(Div0Error) {
     if (stack_.size() < 2) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
     const IOperand *rhs = stack_.back();
     stack_.pop_back();
@@ -128,7 +125,7 @@ void Stack::Div() throw(Div0Error) {
 
 void Stack::Mod() throw(Div0Error) {
     if (stack_.size() < 2) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
     const IOperand *rhs = stack_.back();
     stack_.pop_back();
@@ -142,12 +139,12 @@ void Stack::Mod() throw(Div0Error) {
 
 void Stack::Print(std::ostream &out) throw(PrintError) {
     if (stack_.size() == 0) {
-        throw new StackEmptyError();
+        throw StackEmptyError();
     }
 
     const IOperand *op = stack_.back();
     if (op->getType() != eOperandType::INT_8) {
-        throw new PrintError(op->getType());
+        throw PrintError(op->getType());
     }
     const Int8 &i = *(static_cast<const Int8 *>(op));
     const int8_t val = i.GetInt8();
