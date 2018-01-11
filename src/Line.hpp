@@ -36,6 +36,8 @@ class Line {
     virtual ~Line();
     Line &operator=(Line const &rhs);
 
+    const Token& GetSource() const;
+
    private:
     eInstructionType type;
     const IOperand *op;

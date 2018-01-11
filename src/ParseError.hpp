@@ -23,7 +23,10 @@ class ParseError : std::exception {
 
     const char *what() const throw();
 
-   private:
+    const Token &GetToken() const;
+    const std::string &GetMessage() const;
+
+  private:
     Token err_token;
     std::string message;
 };

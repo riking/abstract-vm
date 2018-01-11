@@ -40,3 +40,7 @@ Line &Line::operator=(const Line &rhs) {
     this->op = (*rhs.op) + identity;
     return *this;
 }
+
+const Token &Line::GetSource() const {
+    return this->source;
+}

@@ -14,8 +14,8 @@
 class Token {
    public:
     Token();
-    Token(unsigned long lineno, std::string source);
-    Token(unsigned long lineno, std::string source, signed long column);
+    Token(size_t lineno, std::string source);
+    Token(size_t lineno, std::string source, ssize_t column);
     Token(Token const &src);
     virtual ~Token();
     Token &operator=(Token const &rhs);
@@ -35,8 +35,8 @@ class Token {
 
    private:
     std::string source;
-    unsigned long lineno;
-    signed long column;
+    size_t lineno;
+    ssize_t column;
 };
 
 #endif  // ABSTRACTVM_TOKEN_HPP

@@ -7,7 +7,9 @@
 
 #include <exception>
 #include <string>
+#include <vector>
 #include "Token.hpp"
+#include "Line.hpp"
 
 /**
  * An error annotated with line number and code.
@@ -17,9 +19,9 @@
 class WrappedError : public std::exception {
    public:
     WrappedError();
-    WrappedError(std::exception wrapped);
-    WrappedError(std::exception wrapped, std::string error_line, int lineno);
-    WrappedError(std::exception wrapped, std::string error_line, Token phrase);
+    WrappedError(const std::exception& wrapped);
+    WrappedError(const std::exception& wrapped, const Token& line_token, const std::vector<Line>& context);
+    WrappedError(const std::string& what, const Token& line_token, const Token& phrase, const std::vector<Line>& context);
     WrappedError(WrappedError const &src);
     virtual ~WrappedError();
     WrappedError &operator=(WrappedError const &rhs);

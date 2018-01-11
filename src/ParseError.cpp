@@ -19,3 +19,10 @@ ParseError::ParseError(ParseError const &src) {}
 ParseError &ParseError::operator=(ParseError const &rhs) { return *this; }
 
 const char *ParseError::what() const throw() { return "Parsing error"; }
+
+const Token &ParseError::GetToken() const {
+    return err_token;
+}
+const std::string &ParseError::GetMessage() const {
+    return message;
+}

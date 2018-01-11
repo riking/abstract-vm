@@ -12,34 +12,66 @@ WrappedError::WrappedError() : msg("Empty WrappedError") {
 
 WrappedError::~WrappedError() {}
 
-WrappedError::WrappedError(std::exception wrapped) {
+WrappedError::WrappedError(const std::exception& wrapped) {
     std::stringstream ss;
     ss << "Error: " << wrapped.what();
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(std::exception wrapped, std::string error_line,
-                           int lineno) {
+WrappedError::WrappedError(const std::exception& wrapped, const Token& line_token, const std::vector<Line>& context) {
     std::stringstream ss;
+    size_t lineno = line_token.GetLine();
+
     ss << "Error on line " << lineno << ":" << std::endl;
-    ss << std::setw(4) << lineno;
-    ss << " " << error_line << std::endl;
+
+    // lambdas are fun!
+    // (this is to encapsulate repeated constructor code)
+    auto print_line = [&ss](const Token& tok) {
+        ss << std::setw(4) << tok.GetLine();
+        ss << " " << tok.GetSource() << std::endl;
+    };
+
+    for (int i = -3; i < 0; i++) {
+        ssize_t idx = (((ssize_t)lineno) + i) - 1;
+        if (idx < 0) {
+            continue;
+        }
+        const Line& v = context.at((size_t)idx);
+        print_line(v.GetSource());
+    }
+    print_line(line_token);
     ss << wrapped.what();
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(std::exception wrapped, std::string error_line,
-                           Token phrase) {
+WrappedError::WrappedError(const std::string& what, const Token& line_token, const Token& phrase, const std::vector<Line>& context) {
     std::stringstream ss;
+    size_t lineno = line_token.GetLine();
 
-    signed long col = phrase.GetColumn();
+    ss << "Error on line " << lineno << ":" << std::endl;
+
+    // lambdas are fun!
+    auto print_line = [&ss](const Token& tok) {
+        ss << std::setw(4) << tok.GetLine();
+        ss << " " << tok.GetSource() << std::endl;
+    };
+
+    for (int i = -3; i < 0; i++) {
+        ssize_t idx = (((ssize_t)lineno) + i) - 1;
+        if (idx < 0) {
+            continue;
+        }
+        const Line& v = context.at((size_t)idx);
+        print_line(v.GetSource());
+    }
+
+    ssize_t col = phrase.GetColumn();
     if (col < 0) {
-        ss << "Error on line " << phrase.GetLine() << " at '"
-           << phrase.GetSource() << "':" << std::endl;
-        ss << std::setw(4) << phrase.GetLine();
-        ss << " " << error_line << std::endl;
+        print_line(line_token);
     } else {
-        unsigned long len = phrase.GetLength();
+        size_t len = phrase.GetLength();
+        // Print line with colorized token
+        const std::string& error_line = line_token.GetSource();
         ss << std::setw(4) << phrase.GetLine();
         ss << " ";
         ss << error_line.substr(0, (unsigned long)col);
@@ -62,7 +94,7 @@ WrappedError::WrappedError(std::exception wrapped, std::string error_line,
         ss << "\027[0m";
         ss << std::endl;
     }
-    ss << wrapped.what();
+    ss << what;
     this->msg = ss.str();
 }
 
