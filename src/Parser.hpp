@@ -29,7 +29,7 @@ class Parser {
     bool is_stdin;
     std::istream *input;
 
-    Line ParseLine(const Token* line_token) throw(ParseError);
+    Line ParseLine(const Token& line_token) throw(ParseError);
     eInstructionType RecognizeInstruction(const Token* token) throw(ParseError);
     const IOperand *ParseOperand(const Token* trimmed_line, size_t instr_len) throw(ParseError);
     eOperandType RecognizeOperand(const Token* type) throw(ParseError);

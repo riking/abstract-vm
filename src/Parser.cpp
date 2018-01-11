@@ -51,7 +51,8 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
 
         const Token line_token(lineno, cur_line);
         try {
-
+            const Line& line = ParseLine(line_token);
+            full_source->push_back(line);
         } catch (ParseError e) {
             throw WrappedError(e.GetMessage(), line_token, e.GetToken(), *(full_source.get()));
         } catch (std::exception e) {
@@ -62,10 +63,10 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
     return std::move(full_source);
 }
 
-Line Parser::ParseLine(const Token *line_token) throw(ParseError) {
-    std::unique_ptr<const Token> trimmed = TrimCommentsAndSpaces(line_token);
+Line Parser::ParseLine(const Token &line_token) throw(ParseError) {
+    std::unique_ptr<const Token> trimmed = TrimCommentsAndSpaces(&line_token);
     if (trimmed->GetLength() == 0) {
-        return Line(*line_token);
+        return Line(line_token);
     }
     std::unique_ptr<const Token> instr = GetFirstWord(trimmed.get());
     eInstructionType instr_type = RecognizeInstruction(instr.get()); // throws instr
@@ -75,10 +76,10 @@ Line Parser::ParseLine(const Token *line_token) throw(ParseError) {
         case eInstructionType::PUSH:
         {
             const IOperand* op = ParseOperand(trimmed.get(), instr->GetLength());
-            return Line(*line_token, *instr, instr_type, op);
+            return Line(line_token, *instr, instr_type, op);
         }
         default:
-            return Line(*line_token, *instr, instr_type);
+            return Line(line_token, *instr, instr_type);
     }
 }
 
