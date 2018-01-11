@@ -6,9 +6,7 @@
 #include <iomanip>
 #include <sstream>
 
-WrappedError::WrappedError() : msg("Empty WrappedError") {
-    msg = "Empty WrappedError";
-}
+WrappedError::WrappedError() : msg("Empty WrappedError") { msg = "Empty WrappedError"; }
 
 WrappedError::~WrappedError() {}
 
@@ -18,7 +16,8 @@ WrappedError::WrappedError(const std::exception& wrapped) {
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(const std::exception& wrapped, const Token& line_token, const std::vector<Line>& context) {
+WrappedError::WrappedError(const std::exception& wrapped, const Token& line_token,
+                           const std::vector<Line>& context) {
     std::stringstream ss;
     size_t lineno = line_token.GetLine();
 
@@ -44,7 +43,8 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(const std::string& what, const Token& line_token, const Token& phrase, const std::vector<Line>& context) {
+WrappedError::WrappedError(const std::string& what, const Token& line_token, const Token& phrase,
+                           const std::vector<Line>& context) {
     std::stringstream ss;
     size_t lineno = line_token.GetLine();
 
@@ -98,11 +98,11 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
     this->msg = ss.str();
 }
 
-WrappedError::WrappedError(WrappedError const &src) { *this = src; }
+WrappedError::WrappedError(WrappedError const& src) { *this = src; }
 
-WrappedError &WrappedError::operator=(WrappedError const &rhs) {
+WrappedError& WrappedError::operator=(WrappedError const& rhs) {
     this->msg = rhs.msg;
     return *this;
 }
 
-const char *WrappedError::what() const throw() { return msg.c_str(); }
+const char* WrappedError::what() const throw() { return msg.c_str(); }

@@ -5,14 +5,11 @@
 #include "Line.hpp"
 #include "Int8.hpp"
 
-Line::Line()
-    : source(Token()), instr(Token()), type(eInstructionType::COMMENT), op(NULL) {}
+Line::Line() : source(Token()), instr(Token()), type(eInstructionType::COMMENT), op(NULL) {}
 
-Line::Line(const Token full)
-    : Line(full, Token(), eInstructionType::COMMENT, NULL) {}
+Line::Line(const Token full) : Line(full, Token(), eInstructionType::COMMENT, NULL) {}
 
-Line::Line(Token full, Token instr, eInstructionType type)
-    : Line(full, instr, type, NULL) {}
+Line::Line(Token full, Token instr, eInstructionType type) : Line(full, instr, type, NULL) {}
 
 Line::Line(Token full, Token instr, eInstructionType type, const IOperand *op)
     : source(full), instr(instr), type(type), op(op) {}
@@ -41,6 +38,4 @@ Line &Line::operator=(const Line &rhs) {
     return *this;
 }
 
-const Token &Line::GetSource() const {
-    return this->source;
-}
+const Token &Line::GetSource() const { return this->source; }

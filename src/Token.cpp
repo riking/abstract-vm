@@ -9,8 +9,7 @@ Token::Token() : source(""), column(-1) {}
 
 Token::~Token() {}
 
-Token::Token(size_t lineno, std::string source)
-    : lineno(lineno), source(source), column(0) {}
+Token::Token(size_t lineno, std::string source) : lineno(lineno), source(source), column(0) {}
 
 Token::Token(size_t lineno, std::string source, ssize_t column)
     : lineno(lineno), source(source), column(column) {}

@@ -5,8 +5,8 @@
 #ifndef ABSTRACTVM_TOKEN_HPP
 #define ABSTRACTVM_TOKEN_HPP
 
-#include <string>
 #include <memory>
+#include <string>
 
 /**
  * A lexeme in the source code.

@@ -8,8 +8,8 @@
 #include <exception>
 #include <string>
 #include <vector>
-#include "Token.hpp"
 #include "Line.hpp"
+#include "Token.hpp"
 
 /**
  * An error annotated with line number and code.
@@ -20,13 +20,15 @@ class WrappedError : public std::exception {
    public:
     WrappedError();
     WrappedError(const std::exception& wrapped);
-    WrappedError(const std::exception& wrapped, const Token& line_token, const std::vector<Line>& context);
-    WrappedError(const std::string& what, const Token& line_token, const Token& phrase, const std::vector<Line>& context);
-    WrappedError(WrappedError const &src);
+    WrappedError(const std::exception& wrapped, const Token& line_token,
+                 const std::vector<Line>& context);
+    WrappedError(const std::string& what, const Token& line_token, const Token& phrase,
+                 const std::vector<Line>& context);
+    WrappedError(WrappedError const& src);
     virtual ~WrappedError();
-    WrappedError &operator=(WrappedError const &rhs);
+    WrappedError& operator=(WrappedError const& rhs);
 
-    const char *what() const throw();
+    const char* what() const throw();
 
    private:
     std::string msg;

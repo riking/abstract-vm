@@ -54,8 +54,7 @@ class AbstractOperand : public IOperand {
         if (this->getType() != rhs.getType()) {
             return false;
         }
-        auto const &casted_rhs =
-            static_cast<AbstractOperand<Type, ValueT> const &>(rhs);
+        auto const &casted_rhs = static_cast<AbstractOperand<Type, ValueT> const &>(rhs);
 
         if (Type == eOperandType::FLOAT || Type == eOperandType::DOUBLE) {
             if (isnan(this->value) && isnan(casted_rhs.value)) {
@@ -67,8 +66,7 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator+(
-        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    IOperand const *operator+(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) + rhs.value;
             return rhs.make_self(new_value_r);
@@ -79,8 +77,7 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator-(
-        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    IOperand const *operator-(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) - rhs.value;
             return rhs.make_self(new_value_r);
@@ -91,8 +88,7 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator*(
-        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    IOperand const *operator*(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (this->getPrecision() < rhs.getPrecision()) {
             RHSValueT new_value_r = ((RHSValueT)this->value) * rhs.value;
             return rhs.make_self(new_value_r);
@@ -103,8 +99,7 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator/(
-        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    IOperand const *operator/(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (rhs.value == 0) {
             throw Div0Error();
         }
@@ -119,8 +114,7 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *operator%(
-        AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+    IOperand const *operator%(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         if (rhs.value == 0) {
             throw Div0Error();
         }

@@ -16,7 +16,7 @@ class ParseError : std::exception {
    public:
     ParseError();
     ParseError(Token err_token, std::string message);
-    ParseError(const Token* err_token, std::string message);
+    ParseError(const Token *err_token, std::string message);
     ParseError(ParseError const &src);
     virtual ~ParseError();
     ParseError &operator=(ParseError const &rhs);
@@ -26,7 +26,7 @@ class ParseError : std::exception {
     const Token &GetToken() const;
     const std::string &GetMessage() const;
 
-  private:
+   private:
     Token err_token;
     std::string message;
 };
