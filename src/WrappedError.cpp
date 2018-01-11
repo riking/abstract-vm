@@ -30,15 +30,23 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
         ss << " " << tok.GetSource() << std::endl;
     };
 
-    for (int i = -3; i < 0; i++) {
+    for (int i = -3; i <= 3; i++) {
         ssize_t idx = (((ssize_t)lineno) + i) - 1;
         if (idx < 0) {
             continue;
         }
+        if (idx >= context.size()) {
+            continue;
+        }
         const Line& v = context.at((size_t)idx);
+        if (i == 0) {
+            ss << "\033[1;31m";  // red
+        }
         print_line(v.GetSource());
+        if (i == 0) {
+            ss << "\033[0m";
+        }
     }
-    print_line(line_token);
     ss << wrapped.what();
     this->msg = ss.str();
 }
@@ -56,9 +64,12 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         ss << " " << tok.GetSource() << std::endl;
     };
 
-    for (int i = -3; i < 0; i++) {
+    for (int i = -3; i <= -1; i++) {
         ssize_t idx = (((ssize_t)lineno) + i) - 1;
         if (idx < 0) {
+            continue;
+        }
+        if (idx >= context.size()) {
             continue;
         }
         const Line& v = context.at((size_t)idx);
@@ -75,9 +86,9 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         ss << std::setw(4) << phrase.GetLine();
         ss << " ";
         ss << error_line.substr(0, (unsigned long)col);
-        ss << "\027[1;31m";  // red
+        ss << "\033[1;31m";  // red
         ss << error_line.substr((unsigned long)col, len);
-        ss << "\027[0m";
+        ss << "\033[0m";
         ss << error_line.substr(col + len, std::string::npos);
         ss << std::endl;
 
@@ -86,13 +97,25 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         for (int i = 0; i < col; i++) {
             ss << " ";
         }
-        ss << "\027[1;34m";  // blue
+        ss << "\033[1;34m";  // blue
         ss << "^";
         for (int i = 0; i < len - 1; i++) {
             ss << "~";
         }
-        ss << "\027[0m";
+        ss << "\033[0m";
         ss << std::endl;
+    }
+
+    for (int i = 1; i <= 3; i++) {
+        ssize_t idx = (((ssize_t)lineno) + i) - 1;
+        if (idx < 0) {
+            continue;
+        }
+        if (idx >= context.size()) {
+            continue;
+        }
+        const Line& v = context.at((size_t)idx);
+        print_line(v.GetSource());
     }
     ss << what;
     this->msg = ss.str();

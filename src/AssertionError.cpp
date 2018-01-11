@@ -25,11 +25,11 @@ AssertionError::AssertionError() : reason_("Assertion failed") {}
 
 AssertionError::~AssertionError() {}
 
-AssertionError::AssertionError(IOperand const &expected, IOperand const &actual) {
+AssertionError::AssertionError(IOperand const *expected, IOperand const *actual) {
     std::stringstream ss;
-    ss << "Assertion failed: wanted [" << type_name(expected.getType()) << " "
-       << expected.toString() << "], got [" << type_name(actual.getType()) << " "
-       << actual.toString() << "]";
+    ss << "Assertion failed: wanted [" << type_name(expected->getType()) << " "
+       << expected->toString() << "], got [" << type_name(actual->getType()) << " "
+       << actual->toString() << "]";
     this->reason_ = ss.str();
 }
 

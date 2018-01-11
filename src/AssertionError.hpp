@@ -7,23 +7,24 @@
 
 #include <exception>
 #include <string>
+#include "IException.hpp"
 #include "IOperand.hpp"
 
 /**
  * An error caused via an 'assert' instruction.
  */
-class AssertionError : public std::exception {
+class AssertionError : public IException {
    public:
     AssertionError();
     /**
      * Note: parameters do not need to live past construction
      */
-    AssertionError(IOperand const &expected, IOperand const &actual);
+    AssertionError(IOperand const *expected, IOperand const *actual);
     AssertionError(AssertionError const &src);
     virtual ~AssertionError();
     AssertionError &operator=(AssertionError const &rhs);
 
-    const char *what() const throw();
+    virtual const char *what() const throw();
 
    private:
     std::string reason_;

@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_CXX_FLAGS "-g -fsanitize=address")
+
 add_executable(abstract-vm
         src/main.cpp
         src/Stack.cpp
@@ -36,10 +38,14 @@ add_executable(abstract-vm
         src/Double.cpp
         src/Double.hpp
 
+        src/IException.hpp
+
         src/AssertionError.cpp
         src/AssertionError.hpp
         src/Div0Error.cpp
         src/Div0Error.hpp
+        src/ParseError.cpp
+        src/ParseError.hpp
         src/PrintError.cpp
         src/PrintError.hpp
         src/StackEmptyError.cpp
@@ -50,4 +56,4 @@ add_executable(abstract-vm
         src/StopExecution.hpp
         src/WrappedError.cpp
         src/WrappedError.hpp
-        src/ParseError.cpp src/ParseError.hpp)
+        )

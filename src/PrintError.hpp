@@ -7,12 +7,13 @@
 
 #include <exception>
 #include <string>
+#include "IException.hpp"
 #include "OperandType.hpp"
 
 /**
  * An error caused via a 'print' instruction.
  */
-class PrintError : public std::exception {
+class PrintError : public IException {
    public:
     PrintError();
     PrintError(eOperandType actual);
@@ -20,7 +21,7 @@ class PrintError : public std::exception {
     virtual ~PrintError();
     PrintError &operator=(PrintError const &rhs);
 
-    const char *what() const throw();
+    virtual const char *what() const throw();
 
    private:
     std::string reason_;

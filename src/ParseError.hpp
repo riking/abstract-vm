@@ -7,12 +7,13 @@
 
 #include <exception>
 #include <string>
+#include "IException.hpp"
 #include "Token.hpp"
 
 /**
  * ParseError is a vehicle for passing the correct Token into WrappedError.
  */
-class ParseError : std::exception {
+class ParseError : public IException {
    public:
     ParseError();
     ParseError(Token err_token, std::string message);
@@ -21,7 +22,7 @@ class ParseError : std::exception {
     virtual ~ParseError();
     ParseError &operator=(ParseError const &rhs);
 
-    const char *what() const throw();
+    virtual const char *what() const throw();
 
     const Token &GetToken() const;
     const std::string &GetMessage() const;

@@ -5,6 +5,10 @@
 #include "Stack.hpp"
 #include "Int8.hpp"
 
+namespace {
+Int8 g_identity = Int8(0);
+}
+
 Stack::Stack() : stack_() {}
 
 Stack::Stack(Stack const &src) : stack_() { (*this) = src; }
@@ -33,7 +37,11 @@ Stack &Stack::operator=(Stack const &rhs) {
     return *this;
 }
 
-void Stack::Push(const IOperand &value) { stack_.push_back(&value); }
+void Stack::Push(const IOperand *value) {
+    // Need to create an owned copy so destructor functions correctly
+    const IOperand *owned_copy = g_identity + *value;
+    stack_.push_back(owned_copy);
+}
 
 void Stack::Pop() throw(StackEmptyError) {
     if (stack_.size() == 0) {
@@ -51,16 +59,16 @@ void Stack::Dump(std::ostream &out) const {
     }
 }
 
-void Stack::Assert(const IOperand &expected) throw(AssertionError) {
+void Stack::Assert(const IOperand *expected) throw(AssertionError) {
     if (stack_.size() == 0) {
         throw StackEmptyError();
     }
-    const IOperand &actual = *(stack_.back());  // do not delete
-    if (actual.getType() != expected.getType()) {
+    const IOperand *actual = stack_.back();  // do not delete
+    if (actual->getType() != expected->getType()) {
         throw AssertionError(expected, actual);
     }
 
-    if (!(expected == actual)) {
+    if (!(*expected == *actual)) {
         throw AssertionError(expected, actual);
     }
     // OK
@@ -151,3 +159,5 @@ void Stack::Print(std::ostream &out) throw(PrintError) {
 
     out << char(val);
 }
+
+void Stack::Exit() throw(StopExecution) { throw StopExecution(); }

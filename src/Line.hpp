@@ -37,6 +37,9 @@ class Line {
     Line &operator=(Line const &rhs);
 
     const Token &GetSource() const;
+    const Token &GetInstrToken() const;
+    const IOperand *GetOperand() const;
+    eInstructionType GetType() const;
 
    private:
     eInstructionType type;

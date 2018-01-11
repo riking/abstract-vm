@@ -21,13 +21,18 @@ Line::~Line() {
     }
 }
 
-Line::Line(Line const &src) : source(src.source), type(src.type) {
-    Int8 identity = Int8(0);
-    this->op = (*src.op) + identity;
+Line::Line(Line const &src) : source(src.source), instr(src.instr), type(src.type) {
+    if (src.op) {
+        Int8 identity = Int8(0);
+        this->op = (*src.op) + identity;
+    } else {
+        this->op = NULL;
+    }
 }
 
 Line &Line::operator=(const Line &rhs) {
     this->source = rhs.source;
+    this->instr = rhs.instr;
     this->type = rhs.type;
     if (this->op) {
         delete this->op;
@@ -39,3 +44,6 @@ Line &Line::operator=(const Line &rhs) {
 }
 
 const Token &Line::GetSource() const { return this->source; }
+const Token &Line::GetInstrToken() const { return this->instr; }
+const IOperand *Line::GetOperand() const { return this->op; }
+eInstructionType Line::GetType() const { return this->type; }

@@ -21,10 +21,10 @@ class Stack {
     virtual ~Stack();
     Stack &operator=(Stack const &rhs);
 
-    void Push(const IOperand &value);
+    void Push(const IOperand *value);
     void Pop() throw(StackEmptyError);
     void Dump(std::ostream &out) const;
-    void Assert(const IOperand &value) throw(AssertionError);
+    void Assert(const IOperand *value) throw(AssertionError);
     void Add();
     void Sub();
     void Mul();

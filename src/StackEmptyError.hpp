@@ -7,18 +7,19 @@
 
 #include <exception>
 #include <string>
+#include "IException.hpp"
 
 /**
  * An error caused via popping values from an empty stack.
  */
-class StackEmptyError : public std::exception {
+class StackEmptyError : public IException {
    public:
     StackEmptyError();
     StackEmptyError(StackEmptyError const &src);
     virtual ~StackEmptyError();
     StackEmptyError &operator=(StackEmptyError const &rhs);
 
-    const char *what() const throw();
+    virtual const char *what() const throw();
 };
 
 #endif  // ABSTRACTVM_STACKEMPTYERROR_HPP

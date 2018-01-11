@@ -13,19 +13,17 @@
 class Interpreter {
    public:
     Interpreter();
-    Interpreter(std::vector<Line> code);
     Interpreter(Interpreter const &src);
     virtual ~Interpreter();
     Interpreter &operator=(Interpreter const &rhs);
 
-    void RunProgram() throw(WrappedError);
+    void Run(std::unique_ptr<std::vector<Line>> program) throw(StopExecution, WrappedError);
 
    private:
-    std::vector<Line> lines;
     int executing_line;
     Stack stack;
 
-    void exec_line(const Line &line) throw(WrappedError);
+    void RunLine(const Line &line) throw(StopExecution, IException);
 };
 
 #endif  // ABSTRACTVM_INTERPRETER_HPP

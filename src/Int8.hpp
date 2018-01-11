@@ -24,6 +24,9 @@ class Int8 : public AbstractOperand<eOperandType::INT_8, int8_t> {
 
     int8_t const GetInt8() const;
 
+    template <eOperandType RhsOpType, typename RHSValueT>
+    IOperand const *_mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const;
+
    protected:
     virtual IOperand const *make_self(int8_t val) const;
 };

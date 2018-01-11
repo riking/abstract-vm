@@ -7,11 +7,12 @@
 
 #include <exception>
 #include <string>
+#include "IException.hpp"
 
 /**
  * An error caused independent of the input.
  */
-class StaticError : public std::exception {
+class StaticError : public IException {
    public:
     StaticError();
     StaticError(const char *reason);
@@ -20,7 +21,7 @@ class StaticError : public std::exception {
     virtual ~StaticError();
     StaticError &operator=(StaticError const &rhs);
 
-    const char *what() const throw();
+    virtual const char *what() const throw();
 
    private:
     std::string reason_;

@@ -54,6 +54,7 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
             const Line &line = ParseLine(line_token);
             full_source->push_back(line);
         } catch (ParseError e) {
+            std::cout << "Parse error. Message: " << e.GetMessage() << std::endl;
             throw WrappedError(e.GetMessage(), line_token, e.GetToken(), *(full_source.get()));
         } catch (std::exception e) {
             throw WrappedError(e, line_token, *(full_source.get()));
@@ -74,10 +75,10 @@ Line Parser::ParseLine(const Token &line_token) throw(ParseError) {
         case eInstructionType::ASSERT:
         case eInstructionType::PUSH: {
             const IOperand *op = ParseOperand(trimmed.get(), instr->GetLength());
-            return Line(line_token, *instr, instr_type, op);
+            return Line(line_token, *trimmed, instr_type, op);
         }
         default:
-            return Line(line_token, *instr, instr_type);
+            return Line(line_token, *trimmed, instr_type);
     }
 }
 
@@ -131,6 +132,7 @@ eOperandType Parser::RecognizeOperand(const Token *type) throw(ParseError) {
     } else if (op_type_str == "double") {
         return eOperandType::DOUBLE;
     } else {
+        std::cerr << "RecognizeOperand parse error" << std::endl;
         throw ParseError(type,
                          "Unrecognized operand type, expecting: int8 int16 "
                          "int32 float double");
@@ -215,6 +217,7 @@ eInstructionType Parser::RecognizeInstruction(const Token *token) throw(ParseErr
     } else if (word == "sub") {
         return eInstructionType::SUB;
     }
+    std::cerr << "RecognizeInstruction parse error" << std::endl;
     throw ParseError(token, "Unrecognized instruction");
 }
 
