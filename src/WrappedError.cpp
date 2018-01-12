@@ -26,8 +26,9 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
     // lambdas are fun!
     // (this is to encapsulate repeated constructor code)
     auto print_line = [&ss](const Token& tok) {
+        ss << "\033[1;30m";
         ss << std::setw(4) << tok.GetLine();
-        ss << " " << tok.GetSource() << std::endl;
+        ss << "\033[0m " << tok.GetSource() << std::endl;
     };
 
     for (int i = -3; i <= 3; i++) {
@@ -60,10 +61,12 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
 
     // lambdas are fun!
     auto print_line = [&ss](const Token& tok) {
+        ss << "\033[1;30m";
         ss << std::setw(4) << tok.GetLine();
-        ss << " " << tok.GetSource() << std::endl;
+        ss << "\033[0m " << tok.GetSource() << std::endl;
     };
 
+    // Pre-context lines
     for (int i = -3; i <= -1; i++) {
         ssize_t idx = (((ssize_t)lineno) + i) - 1;
         if (idx < 0) {
@@ -76,6 +79,7 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         print_line(v.GetSource());
     }
 
+    // Print erroring line
     ssize_t col = phrase.GetColumn();
     if (col < 0) {
         print_line(line_token);
@@ -83,8 +87,9 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         size_t len = phrase.GetLength();
         // Print line with colorized token
         const std::string& error_line = line_token.GetSource();
+        ss << "\033[1;30m";
         ss << std::setw(4) << phrase.GetLine();
-        ss << " ";
+        ss << "\033[0m ";
         ss << error_line.substr(0, (unsigned long)col);
         ss << "\033[1;31m";  // red
         ss << error_line.substr((unsigned long)col, len);
@@ -106,6 +111,7 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         ss << std::endl;
     }
 
+    // Post-context lines
     for (int i = 1; i <= 3; i++) {
         ssize_t idx = (((ssize_t)lineno) + i) - 1;
         if (idx < 0) {
