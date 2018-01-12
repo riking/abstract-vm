@@ -120,41 +120,127 @@ class AbstractOperand : public IOperand {
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *_sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (this->getPrecision() < rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT)this->value) - rhs.get();
-            return rhs.make_self(new_value_r);
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    _sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        bool check;
+        check = __builtin_sub_overflow(lhsv, rhsv, &result);
+        if (check) {
+            throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
         } else {
-            ValueT new_value_s = this->value - ((ValueT)rhs.get());
-            return this->make_self(new_value_s);
+            return this->make_self(result);
         }
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *_mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (this->getPrecision() < rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT)this->value) * rhs.get();
-            return rhs.make_self(new_value_r);
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    _sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        result = lhsv - rhsv;
+        if (isinf(result)) {
+            throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
         } else {
-            ValueT new_value_s = this->value * ((ValueT)rhs.get());
-            return this->make_self(new_value_s);
+            return this->make_self(result);
+        }
+    };
+
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    _mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        bool check;
+        check = __builtin_mul_overflow(lhsv, rhsv, &result);
+        if (check) {
+            throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
         }
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *_div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (rhs.get() == 0) {
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    _mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        result = lhsv * rhsv;
+        if (isinf(result)) {
+            throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
+        }
+    };
+
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    _div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        bool check;
+        if (rhsv == 0) {
             throw Div0Error();
         }
-
-        if (this->getPrecision() < rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT)this->value) / rhs.get();
-            return rhs.make_self(new_value_r);
+        check = lhsv / rhsv; // Integer division cannot overflow
+        if (check) {
+            throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
         } else {
-            ValueT new_value_s = this->value / ((ValueT)rhs.get());
-            return this->make_self(new_value_s);
+            return this->make_self(result);
         }
     }
+
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    _div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        if (rhsv == 0) {
+            throw Div0Error();
+        }
+        result = lhsv / rhsv;
+        if (isinf(result)) {
+            throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
+        }
+    };
 
     // Implemented in concrete subclasses, due to fmod()
 
