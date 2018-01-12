@@ -16,6 +16,7 @@ add_executable(abstract-vm
         src/Token.hpp
         src/Interpreter.cpp
         src/Interpreter.hpp
+        src/InstructionType.cpp
         src/InstructionType.hpp
         src/Line.cpp
         src/Line.hpp
@@ -23,6 +24,7 @@ add_executable(abstract-vm
         src/Parser.hpp
 
         src/IOperand.hpp
+        src/OperandType.cpp
         src/OperandType.hpp
         src/AbstractOperand.cpp
         src/AbstractOperand.hpp
@@ -44,6 +46,8 @@ add_executable(abstract-vm
         src/AssertionError.hpp
         src/Div0Error.cpp
         src/Div0Error.hpp
+        src/OverflowError.cpp
+        src/OverflowError.hpp
         src/ParseError.cpp
         src/ParseError.hpp
         src/PrintError.cpp

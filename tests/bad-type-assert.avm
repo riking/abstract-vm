@@ -1,0 +1,4 @@
+;EXPECT Assertion failed: wanted [Double 42.42], got [Float 42.42]
+
+push float(42.42)
+assert double(42.42)

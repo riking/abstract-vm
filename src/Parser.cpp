@@ -39,14 +39,7 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
     std::string cur_line;
     size_t lineno = 0;
 
-    while (input.good()) {
-        std::getline(input, cur_line, '\n');
-        if (input.eof()) {
-            break;
-        }
-        if (input.fail()) {
-            throw WrappedError(StaticError("I/O Error"));
-        }
+    while (std::getline(input, cur_line)) {
         lineno++;
 
         const Token line_token(lineno, cur_line);
@@ -59,6 +52,9 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
         } catch (std::exception e) {
             throw WrappedError(e, line_token, *(full_source.get()));
         }
+    }
+    if (input.bad()) {
+        throw WrappedError(StaticError("I/O Error"));
     }
     return std::move(full_source);
 }

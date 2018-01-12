@@ -9,6 +9,8 @@
 #include "IOperand.hpp"
 #include "OperandType.hpp"
 #include "StaticError.hpp"
+#include "OverflowError.hpp"
+#include "InstructionType.hpp"
 
 #include <cmath>
 #include <sstream>
@@ -25,7 +27,7 @@ class AbstractOperand : public IOperand {
    public:
     ~AbstractOperand(){};
 
-    AbstractOperand(ValueT value) : value(value){};
+    AbstractOperand(ValueT value) : value(value), as_string() {};
 
     virtual int getPrecision(void) const {
         if (Type == eOperandType::INT_8) {
@@ -45,9 +47,17 @@ class AbstractOperand : public IOperand {
     virtual eOperandType getType(void) const { return Type; }
 
     virtual std::string const &toString(void) const {
+        if (as_string.get()) {
+            return *as_string;
+        }
         std::stringstream ss;
-        ss << value;
-        return *(new std::string(ss.str()));
+        if (Type == eOperandType::INT_8) {
+            ss << (int) value;
+        } else {
+            ss << value;
+        }
+        as_string = std::make_unique<std::string>(ss.str());
+        return *as_string;
     }
 
     virtual bool operator==(IOperand const &rhs) const {
@@ -71,15 +81,43 @@ class AbstractOperand : public IOperand {
 
    protected:
     template <eOperandType RhsOpType, typename RHSValueT>
-    IOperand const *_add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-        if (this->getPrecision() < rhs.getPrecision()) {
-            RHSValueT new_value_r = ((RHSValueT)this->value) + rhs.get();
-            return rhs.make_self(new_value_r);
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        bool check;
+        check = __builtin_add_overflow(lhsv, rhsv, &result);
+        if (check) {
+            throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
         } else {
-            ValueT new_value_s = this->value + ((ValueT)rhs.get());
-            return this->make_self(new_value_s);
+            return this->make_self(result);
         }
     }
+
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        result = lhsv + rhsv;
+        if (isinf(result)) {
+            throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
+        }
+    };
 
     template <eOperandType RhsOpType, typename RHSValueT>
     IOperand const *_sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
@@ -124,6 +162,8 @@ class AbstractOperand : public IOperand {
     // IOperand const *_mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const;
 
     ValueT value;
+    // This is mutable to fix lifetime problems when lazy creating the string representation
+    mutable std::unique_ptr<std::string> as_string;
 };
 
 #endif  // PROJECT_INT_HPP

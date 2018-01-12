@@ -19,23 +19,11 @@ push int32(-150000) ; 3
 add ; 2 (on stack: -80K 1100)
     assert int32(-80000)
 add ; 1
-    assert int32(-79900)
+    assert     int32(-78900)  ;   extra comment space
 
 push int8(127)
-push int8(1)
+push int16(1)
 add
-    assert int8(-128)
-push int16(-1)
-add
-    assert int16(-129)
-push int16(-1)
-push int8(-128)
-add
-    assert int16(-129)
+    assert int16(128)
 dump
-pop
-pop
-pop
 exit
-push int8(1)
-assert int8(0)

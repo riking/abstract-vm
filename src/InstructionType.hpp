@@ -11,6 +11,7 @@ enum class eInstructionType {
     POP,
     DUMP,
     ASSERT,
+    NEG_ASSERT, // Custom: Assert inequality
     ADD,
     SUB,
     MUL,
@@ -20,5 +21,7 @@ enum class eInstructionType {
     EXIT,
     END_OF_FILE,
 };
+
+const char *eInstructionType_Symbol(eInstructionType type);
 
 #endif  // PROJECT_INSTRUCTIONTYPE_HPP

@@ -13,4 +13,6 @@ enum class eOperandType {
     DOUBLE,
 };
 
+const char *eOperandType_Name(eOperandType type);
+
 #endif  // PROJECT_OPERANDTYPE_HPP

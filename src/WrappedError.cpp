@@ -104,7 +104,7 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         }
         ss << "\033[1;34m";  // blue
         ss << "^";
-        for (int i = 0; i < len - 1; i++) {
+        for (int i = 0; (len > 0) && (i < len - 1); i++) {
             ss << "~";
         }
         ss << "\033[0m";

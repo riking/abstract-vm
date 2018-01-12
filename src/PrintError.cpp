@@ -12,24 +12,7 @@ PrintError::~PrintError() {}
 
 PrintError::PrintError(eOperandType actual) {
     std::stringstream ss;
-    ss << "Print failed: need Int8, got ";
-    switch (actual) {
-        case eOperandType::INT_8:
-            ss << "<BAD>";
-            break;
-        case eOperandType::INT_16:
-            ss << "Int16";
-            break;
-        case eOperandType::INT_32:
-            ss << "Int32";
-            break;
-        case eOperandType::FLOAT:
-            ss << "Float";
-            break;
-        case eOperandType::DOUBLE:
-            ss << "Double";
-            break;
-    }
+    ss << "Print failed: need Int8, got " << eOperandType_Name(actual);
     this->reason_ = ss.str();
 }
 
