@@ -86,7 +86,6 @@ const IOperand *Parser::ParseOperand(const Token *trimmed_line,
     std::unique_ptr<const Token> second_part_notrim =
         trimmed_line->SubToken(instr_len, trimmed_line->GetLength() - instr_len);
     std::unique_ptr<const Token> second_part = TrimSpace(second_part_notrim.get());
-    second_part_notrim.release();  // frees memory early & empties the unique_ptr object
     if (second_part->GetLength() == 0) {
         throw ParseError(second_part.get(), "Instruction requires an operand, none given");
     }
