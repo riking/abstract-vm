@@ -32,14 +32,14 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
     };
 
     for (int i = -3; i <= 3; i++) {
-        ssize_t idx = (((ssize_t)lineno) + i) - 1;
+        ssize_t idx = (static_cast<ssize_t>(lineno) + i) - 1;
         if (idx < 0) {
             continue;
         }
-        if (idx >= context.size()) {
+        if (idx >= static_cast<ssize_t>(context.size())) {
             continue;
         }
-        const Line& v = context.at((size_t)idx);
+        const Line& v = context.at(static_cast<size_t>(idx));
         if (i == 0) {
             ss << "\033[1;31m";  // red
         }
@@ -68,14 +68,14 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
 
     // Pre-context lines
     for (int i = -3; i <= -1; i++) {
-        ssize_t idx = (((ssize_t)lineno) + i) - 1;
+        ssize_t idx = (static_cast<ssize_t>(lineno) + i) - 1;
         if (idx < 0) {
             continue;
         }
-        if (idx >= context.size()) {
+        if (idx >= static_cast<ssize_t>(context.size())) {
             continue;
         }
-        const Line& v = context.at((size_t)idx);
+        const Line& v = context.at(static_cast<size_t>(idx));
         print_line(v.GetSource());
     }
 
@@ -99,12 +99,12 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
 
         ss << std::setw(4) << "";
         ss << " ";
-        for (int i = 0; i < col; i++) {
+        for (ssize_t i = 0; i < col; i++) {
             ss << " ";
         }
         ss << "\033[1;34m";  // blue
         ss << "^";
-        for (int i = 0; (len > 0) && (i < len - 1); i++) {
+        for (size_t i = 0; (len > 0) && (i < len - 1); i++) {
             ss << "~";
         }
         ss << "\033[0m";
@@ -113,14 +113,14 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
 
     // Post-context lines
     for (int i = 1; i <= 3; i++) {
-        ssize_t idx = (((ssize_t)lineno) + i) - 1;
+        ssize_t idx = (static_cast<ssize_t>(lineno) + i) - 1;
         if (idx < 0) {
             continue;
         }
-        if (idx >= context.size()) {
+        if (idx >= static_cast<ssize_t>(context.size())) {
             continue;
         }
-        const Line& v = context.at((size_t)idx);
+        const Line& v = context.at(static_cast<size_t>(idx));
         print_line(v.GetSource());
     }
     ss << what;
