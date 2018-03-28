@@ -17,4 +17,5 @@ const char *eOperandType_Name(eOperandType type) {
         case eOperandType::DOUBLE:
             return "Double";
     }
+    return "<ERROR: Invalid operand type>";
 }

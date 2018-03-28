@@ -206,6 +206,8 @@ const IOperand *Parser::MakeOperand(eOperandType op_type, const Token *value) th
             }
             return new Double(val_d);
         }
+        default:
+            throw ParseError(value, "Invalid enum for operand type");
     }
 }
 

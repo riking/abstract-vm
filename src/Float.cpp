@@ -36,6 +36,8 @@ IOperand const *Float::operator+(IOperand const &rhs) const {
             return this->_add(static_cast<const Float &>(rhs));
         case eOperandType::DOUBLE:
             return this->_add(static_cast<const Double &>(rhs));
+        default:
+            throw StaticError("Bad operand type");
     }
 }
 
@@ -51,6 +53,8 @@ IOperand const *Float::operator-(IOperand const &rhs) const {
             return this->_sub(static_cast<const Float &>(rhs));
         case eOperandType::DOUBLE:
             return this->_sub(static_cast<const Double &>(rhs));
+        default:
+            throw StaticError("Bad operand type");
     }
 }
 
@@ -66,6 +70,8 @@ IOperand const *Float::operator*(IOperand const &rhs) const {
             return this->_mul(static_cast<const Float &>(rhs));
         case eOperandType::DOUBLE:
             return this->_mul(static_cast<const Double &>(rhs));
+        default:
+            throw StaticError("Bad operand type");
     }
 }
 
@@ -81,6 +87,8 @@ IOperand const *Float::operator/(IOperand const &rhs) const {
             return this->_div(static_cast<const Float &>(rhs));
         case eOperandType::DOUBLE:
             return this->_div(static_cast<const Double &>(rhs));
+        default:
+            throw StaticError("Bad operand type");
     }
 }
 
@@ -96,5 +104,7 @@ IOperand const *Float::operator%(IOperand const &rhs) const {
             return this->_mod(static_cast<const Float &>(rhs));
         case eOperandType::DOUBLE:
             return this->_mod(static_cast<const Double &>(rhs));
+        default:
+            throw StaticError("Bad operand type");
     }
 }
