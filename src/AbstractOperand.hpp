@@ -68,7 +68,7 @@ class AbstractOperand : public IOperand {
         auto const &casted_rhs = static_cast<AbstractOperand<Type, ValueT> const &>(rhs);
 
         if (Type == eOperandType::FLOAT || Type == eOperandType::DOUBLE) {
-            if (isnan(this->value) && isnan(casted_rhs.get())) {
+            if (std::isnan(this->value) && std::isnan(casted_rhs.get())) {
                 return true;
             }
         }
@@ -111,7 +111,7 @@ class AbstractOperand : public IOperand {
         ResultValueT rhsv = (ResultValueT) rhs.get();
         ResultValueT result;
         result = lhsv + rhsv;
-        if (isinf(result)) {
+        if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
         }
         if (RhsOpType > Type) {
@@ -150,7 +150,7 @@ class AbstractOperand : public IOperand {
         ResultValueT rhsv = (ResultValueT) rhs.get();
         ResultValueT result;
         result = lhsv - rhsv;
-        if (isinf(result)) {
+        if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
         }
         if (RhsOpType > Type) {
@@ -189,7 +189,7 @@ class AbstractOperand : public IOperand {
         ResultValueT rhsv = (ResultValueT) rhs.get();
         ResultValueT result;
         result = lhsv * rhsv;
-        if (isinf(result)) {
+        if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
         }
         if (RhsOpType > Type) {
@@ -234,7 +234,7 @@ class AbstractOperand : public IOperand {
             throw Div0Error();
         }
         result = lhsv / rhsv;
-        if (isinf(result)) {
+        if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
         }
         if (RhsOpType > Type) {
@@ -281,11 +281,11 @@ class AbstractOperand : public IOperand {
         if (rhsv == 0) {
             throw Div0Error();
         }
-        if (isinf(lhsv)) {
+        if (std::isinf(lhsv)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         result = fmodf(lhsv, rhsv);
-        if (isinf(result)) {
+        if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         if (RhsOpType > Type) {
@@ -306,11 +306,11 @@ class AbstractOperand : public IOperand {
         if (rhsv == 0) {
             throw Div0Error();
         }
-        if (isinf(lhsv)) {
+        if (std::isinf(lhsv)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         result = fmod(lhsv, rhsv);
-        if (isinf(result)) {
+        if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         if (RhsOpType > Type) {
