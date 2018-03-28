@@ -21,7 +21,8 @@ class OverflowError : public IException {
     /**
      * Note: parameters do not need to live past construction
      */
-    OverflowError(IOperand const *lhs, IOperand const *rhs, eInstructionType instr_type, eOperandType result_type);
+    OverflowError(IOperand const *lhs, IOperand const *rhs, eInstructionType instr_type,
+                  eOperandType result_type);
     OverflowError(OverflowError const &src);
     virtual ~OverflowError();
     OverflowError &operator=(OverflowError const &rhs);

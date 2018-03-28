@@ -144,14 +144,14 @@ const IOperand *Parser::MakeOperand(eOperandType op_type, const Token *value) th
         case eOperandType::INT_8:
         case eOperandType::INT_16:
         case eOperandType::INT_32: {
-			long long val_ll;
-			try {
-				val_ll = std::stoll(value->GetSource(), &val_end_idx);
-			} catch (std::invalid_argument) {
-				throw ParseError(value, "Failed to parse integer");
-			} catch (std::out_of_range) {
-				throw ParseError(value, "Value out of range for integer");
-			}
+            long long val_ll;
+            try {
+                val_ll = std::stoll(value->GetSource(), &val_end_idx);
+            } catch (std::invalid_argument) {
+                throw ParseError(value, "Failed to parse integer");
+            } catch (std::out_of_range) {
+                throw ParseError(value, "Value out of range for integer");
+            }
             if (val_end_idx != value->GetLength()) {
                 throw ParseError(value, "Extra content after numeric value");
             }
@@ -179,28 +179,28 @@ const IOperand *Parser::MakeOperand(eOperandType op_type, const Token *value) th
             }
         }
         case eOperandType::FLOAT: {
-			float val_f;
-			try {
-				val_f = std::stof(value->GetSource(), &val_end_idx);
-			} catch (std::invalid_argument) {
-				throw ParseError(value, "Failed to parse float");
-			} catch (std::out_of_range) {
-				throw ParseError(value, "Value out of range for float");
-			}
+            float val_f;
+            try {
+                val_f = std::stof(value->GetSource(), &val_end_idx);
+            } catch (std::invalid_argument) {
+                throw ParseError(value, "Failed to parse float");
+            } catch (std::out_of_range) {
+                throw ParseError(value, "Value out of range for float");
+            }
             if (val_end_idx != value->GetLength()) {
                 throw ParseError(value, "Extra content after numeric value");
             }
             return new Float(val_f);
         }
         case eOperandType::DOUBLE: {
-			double val_d;
-			try {
-				val_d = std::stod(value->GetSource(), &val_end_idx);
-			} catch (std::invalid_argument) {
-				throw ParseError(value, "Failed to parse double");
-			} catch (std::out_of_range) {
-				throw ParseError(value, "Value out of range for double");
-			}
+            double val_d;
+            try {
+                val_d = std::stod(value->GetSource(), &val_end_idx);
+            } catch (std::invalid_argument) {
+                throw ParseError(value, "Failed to parse double");
+            } catch (std::out_of_range) {
+                throw ParseError(value, "Value out of range for double");
+            }
             if (val_end_idx != value->GetLength()) {
                 throw ParseError(value, "Extra content after numeric value");
             }

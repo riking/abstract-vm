@@ -5,14 +5,14 @@
 #include "Token.hpp"
 #include "StaticError.hpp"
 
-Token::Token() : source(""), column(-1) {}
+Token::Token() : source(""), lineno(-1), column(-1) {}
 
 Token::~Token() {}
 
-Token::Token(size_t lineno, std::string source) : lineno(lineno), source(source), column(0) {}
+Token::Token(size_t lineno, std::string source) : source(source), lineno(lineno), column(0) {}
 
 Token::Token(size_t lineno, std::string source, ssize_t column)
-    : lineno(lineno), source(source), column(column) {}
+    : source(source), lineno(lineno), column(column) {}
 
 Token::Token(const Token &src) { *this = src; }
 

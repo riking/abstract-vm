@@ -32,11 +32,11 @@ void Interpreter::Run(std::unique_ptr<std::vector<Line>> program) throw(StopExec
         }
     }
     throw WrappedError(StaticError("Reached end of file without 'exit' instruction"));
-}   
+}
 
 void Interpreter::RunLine(const Line &line) throw(StopExecution, IException) {
     switch (line.GetType()) {
-         case eInstructionType::COMMENT:
+        case eInstructionType::COMMENT:
             // Comment
             break;
         case eInstructionType::PUSH:

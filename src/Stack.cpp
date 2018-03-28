@@ -9,7 +9,7 @@ namespace {
 Int8 g_identity = Int8(0);
 }
 
-//bool operator==(IOperand const &self, IOperand const &rhs);
+// bool operator==(IOperand const &self, IOperand const &rhs);
 
 Stack::Stack() : stack_() {}
 

@@ -6,7 +6,6 @@
 
 #include <sstream>
 
-
 AssertionError::AssertionError() : reason_("Assertion failed") {}
 
 AssertionError::~AssertionError() {}

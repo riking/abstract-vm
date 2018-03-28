@@ -5,14 +5,14 @@
 #include "Line.hpp"
 #include "Int8.hpp"
 
-Line::Line() : source(Token()), instr(Token()), type(eInstructionType::COMMENT), op(NULL) {}
+Line::Line() : type(eInstructionType::COMMENT), op(NULL), source(Token()), instr(Token()) {}
 
 Line::Line(const Token full) : Line(full, Token(), eInstructionType::COMMENT, NULL) {}
 
 Line::Line(Token full, Token instr, eInstructionType type) : Line(full, instr, type, NULL) {}
 
 Line::Line(Token full, Token instr, eInstructionType type, const IOperand *op)
-    : source(full), instr(instr), type(type), op(op) {}
+    : type(type), op(op), source(full), instr(instr) {}
 
 Line::~Line() {
     if (this->op) {

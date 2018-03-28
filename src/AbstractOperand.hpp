@@ -7,10 +7,10 @@
 
 #include "Div0Error.hpp"
 #include "IOperand.hpp"
-#include "OperandType.hpp"
-#include "StaticError.hpp"
-#include "OverflowError.hpp"
 #include "InstructionType.hpp"
+#include "OperandType.hpp"
+#include "OverflowError.hpp"
+#include "StaticError.hpp"
 
 #include <cmath>
 #include <memory>
@@ -28,7 +28,7 @@ class AbstractOperand : public IOperand {
    public:
     ~AbstractOperand(){};
 
-    AbstractOperand(ValueT value) : value(value), as_string() {};
+    AbstractOperand(ValueT value) : value(value), as_string(){};
 
     virtual int getPrecision(void) const {
         if (Type == eOperandType::INT_8) {
@@ -53,7 +53,7 @@ class AbstractOperand : public IOperand {
         }
         std::stringstream ss;
         if (Type == eOperandType::INT_8) {
-            ss << (int) value;
+            ss << (int)value;
         } else {
             ss << value;
         }
@@ -81,14 +81,14 @@ class AbstractOperand : public IOperand {
     virtual IOperand const *make_self(ValueT value) const = 0;
 
    protected:
-
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT),
+                            IOperand const *>::type
     _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         bool check;
         check = __builtin_add_overflow(lhsv, rhsv, &result);
@@ -103,12 +103,13 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT),
+                            IOperand const *>::type
     _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         result = lhsv + rhsv;
         if (std::isinf(result)) {
@@ -122,12 +123,13 @@ class AbstractOperand : public IOperand {
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT),
+                            IOperand const *>::type
     _sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         bool check;
         check = __builtin_sub_overflow(lhsv, rhsv, &result);
@@ -142,12 +144,13 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT),
+                            IOperand const *>::type
     _sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         result = lhsv - rhsv;
         if (std::isinf(result)) {
@@ -161,12 +164,13 @@ class AbstractOperand : public IOperand {
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT),
+                            IOperand const *>::type
     _mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         bool check;
         check = __builtin_mul_overflow(lhsv, rhsv, &result);
@@ -181,12 +185,13 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT),
+                            IOperand const *>::type
     _mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         result = lhsv * rhsv;
         if (std::isinf(result)) {
@@ -200,18 +205,19 @@ class AbstractOperand : public IOperand {
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT),
+                            IOperand const *>::type
     _div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         bool check;
         if (rhsv == 0) {
             throw Div0Error();
         }
-        check = lhsv / rhsv; // Integer division cannot overflow
+        check = lhsv / rhsv;  // Integer division cannot overflow
         if (check) {
             throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
         }
@@ -223,12 +229,13 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type >= eOperandType::FLOAT) || (RhsOpType >= eOperandType::FLOAT),
+                            IOperand const *>::type
     _div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         if (rhsv == 0) {
             throw Div0Error();
@@ -247,18 +254,19 @@ class AbstractOperand : public IOperand {
     // Modulo
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT),
+                            IOperand const *>::type
     _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         bool check;
         if (rhsv == 0) {
             throw Div0Error();
         }
-        check = lhsv % rhsv; // Integer division cannot overflow
+        check = lhsv % rhsv;  // Integer division cannot overflow
         if (check) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
@@ -270,13 +278,15 @@ class AbstractOperand : public IOperand {
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<((Type == eOperandType::FLOAT) || (RhsOpType == eOperandType::FLOAT))
-        && !((Type == eOperandType::DOUBLE) || (RhsOpType == eOperandType::DOUBLE)), IOperand const *>::type
+    typename std::enable_if<((Type == eOperandType::FLOAT) || (RhsOpType == eOperandType::FLOAT)) &&
+                                !((Type == eOperandType::DOUBLE) ||
+                                  (RhsOpType == eOperandType::DOUBLE)),
+                            IOperand const *>::type
     _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         if (rhsv == 0) {
             throw Div0Error();
@@ -296,12 +306,13 @@ class AbstractOperand : public IOperand {
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
-    typename std::enable_if<(Type == eOperandType::DOUBLE) || (RhsOpType == eOperandType::DOUBLE), IOperand const *>::type
+    typename std::enable_if<(Type == eOperandType::DOUBLE) || (RhsOpType == eOperandType::DOUBLE),
+                            IOperand const *>::type
     _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT) this->value;
-        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result;
         if (rhsv == 0) {
             throw Div0Error();

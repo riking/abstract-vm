@@ -7,17 +7,12 @@
 
 #include <sstream>
 
-
 OverflowError::OverflowError() : reason_("Math overflow") {}
 
 OverflowError::~OverflowError() {}
 
-OverflowError::OverflowError(
-    IOperand const *lhs,
-    IOperand const *rhs,
-    eInstructionType instr_type,
-    eOperandType result_type) {
-
+OverflowError::OverflowError(IOperand const *lhs, IOperand const *rhs, eInstructionType instr_type,
+                             eOperandType result_type) {
     std::stringstream ss;
     ss << "Operation overflow: ";
     ss << "[" << eOperandType_Name(lhs->getType()) << " " << lhs->toString() << "]";
