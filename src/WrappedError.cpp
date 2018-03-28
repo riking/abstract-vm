@@ -3,8 +3,28 @@
 //
 
 #include "WrappedError.hpp"
+#include <algorithm>
 #include <iomanip>
 #include <sstream>
+
+namespace
+{
+const std::string escape_nul(const std::string &s) {
+	std::string::const_iterator it = std::find(s.begin(), s.end(), '\0');
+	if (it == s.end()) {
+		return s;
+	}
+	const std::string replacement = "\uFFFD";
+	const std::string nul_find("\0", 1);
+	std::string dest(s);
+	size_t start_pos = 0;
+	while ((start_pos = dest.find(nul_find, start_pos)) != std::string::npos) {
+		dest.replace(start_pos, /* length */ 1, replacement);
+		start_pos += replacement.length();
+	}
+	return dest;
+}
+}
 
 WrappedError::WrappedError() : msg("Empty WrappedError") { msg = "Empty WrappedError"; }
 
@@ -28,7 +48,7 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
     auto print_line = [&ss](const Token& tok) {
         ss << "\033[1;30m";
         ss << std::setw(4) << tok.GetLine();
-        ss << "\033[0m " << tok.GetSource() << std::endl;
+        ss << "\033[0m " << escape_nul(tok.GetSource()) << std::endl;
     };
 
     for (int i = -3; i <= 3; i++) {
@@ -48,7 +68,7 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
             ss << "\033[0m";
         }
     }
-    ss << wrapped.what();
+    ss << escape_nul(wrapped.what());
     this->msg = ss.str();
 }
 
@@ -63,7 +83,7 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
     auto print_line = [&ss](const Token& tok) {
         ss << "\033[1;30m";
         ss << std::setw(4) << tok.GetLine();
-        ss << "\033[0m " << tok.GetSource() << std::endl;
+        ss << "\033[0m " << escape_nul(tok.GetSource()) << std::endl;
     };
 
     // Pre-context lines
@@ -90,11 +110,11 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         ss << "\033[1;30m";
         ss << std::setw(4) << phrase.GetLine();
         ss << "\033[0m ";
-        ss << error_line.substr(0, (unsigned long)col);
+        ss << escape_nul(error_line.substr(0, (unsigned long)col));
         ss << "\033[1;31m";  // red
-        ss << error_line.substr((unsigned long)col, len);
+        ss << escape_nul(error_line.substr((unsigned long)col, len));
         ss << "\033[0m";
-        ss << error_line.substr(col + len, std::string::npos);
+        ss << escape_nul(error_line.substr(col + len, std::string::npos));
         ss << std::endl;
 
         ss << std::setw(4) << "";
@@ -123,7 +143,7 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         const Line& v = context.at(static_cast<size_t>(idx));
         print_line(v.GetSource());
     }
-    ss << what;
+    ss << escape_nul(what);
     this->msg = ss.str();
 }
 
