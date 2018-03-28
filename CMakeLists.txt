@@ -70,6 +70,7 @@ target_sources(abstract-vm PRIVATE
 
 # Flags
 target_compile_options(abstract-vm PRIVATE "-Wall" "-Wextra" "-Werror")
+target_compile_options(abstract-vm PRIVATE "-fexceptions")
 set_target_properties(abstract-vm PROPERTIES
 	LINK_FLAGS "-Wall"
 	LINK_FLAGS "-Wextra"
