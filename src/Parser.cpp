@@ -3,10 +3,13 @@
 //
 
 #include "Parser.hpp"
+
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <sstream>
 #include <string>
+
 #include "Double.hpp"
 #include "Float.hpp"
 #include "Int16.hpp"
