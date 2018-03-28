@@ -28,8 +28,8 @@ class Stack {
     void Add();
     void Sub();
     void Mul();
-    void Div() throw(Div0Error);
-    void Mod() throw(Div0Error);
+    void Div();
+    void Mod();
     void Print(std::ostream &out) throw(PrintError);
     void Exit() throw(StopExecution);
 

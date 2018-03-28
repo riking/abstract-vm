@@ -6,10 +6,11 @@ push int8(-4)
     assert int8(-4)
 add ; 1
     assert int8(-1)
-push int16(1000) ; 2
+push int16(1000) ;; fail
     assert int16(1000)
 add ; 1
     assert int16(999)
+;;
 push int8(101) ; 2
 add ; 1
     assert int16(1100)
@@ -23,7 +24,7 @@ add ; 1
 
 push int8(127)
 push int16(1)
-add
+   add
     assert int16(128)
 dump
 exit

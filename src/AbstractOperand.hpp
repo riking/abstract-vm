@@ -80,6 +80,7 @@ class AbstractOperand : public IOperand {
     virtual IOperand const *make_self(ValueT value) const = 0;
 
    protected:
+
     template <eOperandType RhsOpType, typename RHSValueT>
     typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
     _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
@@ -242,10 +243,81 @@ class AbstractOperand : public IOperand {
         }
     };
 
-    // Implemented in concrete subclasses, due to fmod()
+    // Modulo
 
-    // template<eOperandType RhsOpType, typename RHSValueT>
-    // IOperand const *_mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const;
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<(Type < eOperandType::FLOAT) && (RhsOpType < eOperandType::FLOAT), IOperand const *>::type
+    _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        bool check;
+        if (rhsv == 0) {
+            throw Div0Error();
+        }
+        check = lhsv % rhsv; // Integer division cannot overflow
+        if (check) {
+            throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
+        }
+    }
+
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<((Type == eOperandType::FLOAT) || (RhsOpType == eOperandType::FLOAT))
+        && !((Type == eOperandType::DOUBLE) || (RhsOpType == eOperandType::DOUBLE)), IOperand const *>::type
+    _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        if (rhsv == 0) {
+            throw Div0Error();
+        }
+        if (isinf(lhsv)) {
+            throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
+        }
+        result = fmodf(lhsv, rhsv);
+        if (isinf(result)) {
+            throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
+        }
+    };
+
+    template <eOperandType RhsOpType, typename RHSValueT>
+    typename std::enable_if<(Type == eOperandType::DOUBLE) || (RhsOpType == eOperandType::DOUBLE), IOperand const *>::type
+    _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
+        constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
+        typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
+        ResultValueT lhsv = (ResultValueT) this->value;
+        ResultValueT rhsv = (ResultValueT) rhs.get();
+        ResultValueT result;
+        if (rhsv == 0) {
+            throw Div0Error();
+        }
+        if (isinf(lhsv)) {
+            throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
+        }
+        result = fmod(lhsv, rhsv);
+        if (isinf(result)) {
+            throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
+        }
+        if (RhsOpType > Type) {
+            return rhs.make_self(result);
+        } else {
+            return this->make_self(result);
+        }
+    };
 
     ValueT value;
     // This is mutable to fix lifetime problems when lazy creating the string representation

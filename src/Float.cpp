@@ -84,26 +84,6 @@ IOperand const *Float::operator/(IOperand const &rhs) const {
     }
 }
 
-template <eOperandType RhsOpType, typename RHSValueT>
-IOperand const *Float::_mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
-    if (rhs.get() == 0) {
-        throw Div0Error();
-    }
-
-    float new_value = fmodf(this->value, (float)rhs.get());
-    return this->make_self(new_value);
-}
-
-template <>
-IOperand const *Float::_mod(AbstractOperand<eOperandType::DOUBLE, double> const &rhs) const {
-    if (rhs.get() == 0) {
-        throw Div0Error();
-    }
-
-    double new_value = fmod((double)this->value, rhs.get());
-    return rhs.make_self(new_value);
-}
-
 IOperand const *Float::operator%(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:

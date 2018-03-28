@@ -241,10 +241,6 @@ std::unique_ptr<const Token> Parser::TrimCommentsAndSpaces(const Token *token) {
         std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace)));
     // find first semicolon
     std::string::const_iterator comment_start = std::find(s.begin(), s.end(), ';');
-    // check for ;;
-    if (this->is_stdin && *(comment_start) == ';' && *(comment_start + 1) == ';') {
-        return token->SubToken(comment_start - s.begin(), 2);
-    }
     auto comment_start_r = std::make_reverse_iterator(comment_start);
     // find last non-space before comment start
     std::string::const_iterator right_bound =
@@ -253,7 +249,11 @@ std::unique_ptr<const Token> Parser::TrimCommentsAndSpaces(const Token *token) {
 
     ssize_t offset = left_bound - s.begin();
     ssize_t len = right_bound - left_bound;
-    if (len < 0) {
+    if (len <= 0) {
+        // check for ;;
+        if (this->is_stdin && *(comment_start) == ';' && *(comment_start + 1) == ';') {
+            return token->SubToken(comment_start - s.begin(), 2);
+        }
         return token->SubToken(offset, 0);
     }
     assert(offset >= 0);

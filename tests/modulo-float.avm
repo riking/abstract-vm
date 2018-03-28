@@ -1,0 +1,6 @@
+
+push float(101.01)
+push float(1.01)
+mod
+dump
+exit

@@ -9,6 +9,8 @@ namespace {
 Int8 g_identity = Int8(0);
 }
 
+//bool operator==(IOperand const &self, IOperand const &rhs);
+
 Stack::Stack() : stack_() {}
 
 Stack::Stack(Stack const &src) : stack_() { (*this) = src; }
@@ -117,7 +119,7 @@ void Stack::Mul() {
     stack_.push_back(push);
 }
 
-void Stack::Div() throw(Div0Error) {
+void Stack::Div() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
@@ -131,7 +133,7 @@ void Stack::Div() throw(Div0Error) {
     stack_.push_back(push);
 }
 
-void Stack::Mod() throw(Div0Error) {
+void Stack::Mod() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
