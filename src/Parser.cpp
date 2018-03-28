@@ -59,7 +59,7 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
     if (input.bad()) {
         throw WrappedError(StaticError("I/O Error"));
     }
-    return std::move(full_source);
+    return full_source;
 }
 
 Line Parser::ParseLine(const Token &line_token) throw(ParseError) {

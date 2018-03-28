@@ -21,7 +21,7 @@ Line::~Line() {
     }
 }
 
-Line::Line(Line const &src) : source(src.source), instr(src.instr), type(src.type) {
+Line::Line(Line const &src) : type(src.type), op(NULL), source(src.source), instr(src.instr) {
     if (src.op) {
         Int8 identity = Int8(0);
         this->op = (*src.op) + identity;
