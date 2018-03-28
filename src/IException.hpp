@@ -7,6 +7,8 @@
 
 #include <exception>
 
+#define UNUSED_PARAM __attribute__((unused))
+
 class IException : public std::exception {
    public:
     virtual ~IException(){};

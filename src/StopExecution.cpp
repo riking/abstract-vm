@@ -8,8 +8,8 @@ StopExecution::StopExecution() {}
 
 StopExecution::~StopExecution() {}
 
-StopExecution::StopExecution(StopExecution const &src) {}
+StopExecution::StopExecution(StopExecution const &) {}
 
-StopExecution &StopExecution::operator=(StopExecution const &rhs) { return *this; }
+StopExecution &StopExecution::operator=(StopExecution const &) { return *this; }
 
 const char *StopExecution::what() const throw() { return "Exit"; }

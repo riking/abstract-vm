@@ -8,8 +8,8 @@ Div0Error::Div0Error() {}
 
 Div0Error::~Div0Error() {}
 
-Div0Error::Div0Error(Div0Error const &src) {}
+Div0Error::Div0Error(Div0Error const &) {}
 
-Div0Error &Div0Error::operator=(Div0Error const &rhs) { return *this; }
+Div0Error &Div0Error::operator=(Div0Error const &) { return *this; }
 
 const char *Div0Error::what() const throw() { return "Divide by 0"; }
