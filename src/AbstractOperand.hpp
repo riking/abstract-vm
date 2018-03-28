@@ -13,6 +13,7 @@
 #include "InstructionType.hpp"
 
 #include <cmath>
+#include <memory>
 #include <sstream>
 #include <type_traits>
 
