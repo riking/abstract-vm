@@ -7,6 +7,7 @@
 
 enum class eInstructionType {
     COMMENT,
+    EXPECT_COMMENT,
     PUSH,
     POP,
     DUMP,

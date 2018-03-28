@@ -31,8 +31,11 @@ class WrappedError : public IException {
 
     virtual const char* what() const throw();
 
+    std::string GetInnerMessage() const;
+
    private:
     std::string msg;
+    std::string inner_msg;
 };
 
 #endif  // ABSTRACTVM_WRAPPEDERROR_HPP

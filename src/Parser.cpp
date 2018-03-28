@@ -215,6 +215,8 @@ eInstructionType Parser::RecognizeInstruction(const Token *token) throw(ParseErr
     const std::string &word = token->GetSource();
     if (this->is_stdin && word == ";;") {
         return eInstructionType::END_OF_FILE;
+    } else if (word == ";EXPECT") {
+        return eInstructionType::EXPECT_COMMENT;
     } else if (word == "add") {
         return eInstructionType::ADD;
     } else if (word == "assert") {
@@ -260,6 +262,7 @@ std::unique_ptr<const Token> Parser::TrimSpace(const Token *token) {
 }
 
 std::unique_ptr<const Token> Parser::TrimCommentsAndSpaces(const Token *token) {
+    static const std::string expect_comment = ";EXPECT";
     const std::string &s = token->GetSource();
     // find first non-space
     std::string::const_iterator left_bound =
@@ -278,6 +281,15 @@ std::unique_ptr<const Token> Parser::TrimCommentsAndSpaces(const Token *token) {
         // check for ;;
         if (this->is_stdin && *(comment_start) == ';' && *(comment_start + 1) == ';') {
             return token->SubToken(comment_start - s.begin(), 2);
+        }
+        // check for ;EXPECT
+        if (s.compare(offset, expect_comment.length(), expect_comment) == 0) {
+            // Recalculate right boundary
+            right_bound =
+                std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace)))
+                    .base();
+            len = right_bound - left_bound;
+            return token->SubToken(offset, len);
         }
         return token->SubToken(offset, 0);
     }

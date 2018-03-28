@@ -10,8 +10,8 @@
 #include "StopExecution.hpp"
 #include "WrappedError.hpp"
 
-int main(int argc, char **argv) {
-    char *file;
+int main(int argc, char** argv) {
+    char* file;
     if (argc == 1) {
         file = NULL;
     } else if (argc == 2) {
@@ -20,6 +20,10 @@ int main(int argc, char **argv) {
         std::cerr << "Usage: abstract-vm [file]";
         return 2;
     }
+
+    std::string expect_error = "";
+    std::string actual_error = "";
+    int result = -1;
 
     try {
         std::unique_ptr<std::vector<Line>> program;
@@ -34,13 +38,46 @@ int main(int argc, char **argv) {
             }
         }
 
+        // Check for ;EXPECT
+        auto it = std::find_if(program->begin(), program->end(), [](const Line& l) -> bool {
+            return l.GetType() == eInstructionType::EXPECT_COMMENT;
+        });
+        if (it != program->end()) {
+            const Line& l = *it;
+            const Token& instr_tok = l.GetInstrToken();
+            constexpr int instr_len = sizeof(";EXPECT ") - 1;
+            // ";EXPECT ".length
+            std::unique_ptr<Token> expect_tok =
+                instr_tok.SubToken(instr_len, instr_tok.GetLength() - instr_len);
+            expect_error = expect_tok->GetSource();
+        }
+
         Interpreter i;
         i.Run(std::move(program));
 
     } catch (StopExecution) {
-        return 0;
+        result = 0;
     } catch (WrappedError e) {
+        actual_error = e.GetInnerMessage();
         std::cerr << e.what() << std::endl;
-        return 1;
+        result = 1;
     }
+
+    if (expect_error != "") {
+        size_t idx = actual_error.find(expect_error);
+        if (idx == std::string::npos) {
+            std::cerr << "EXPECT FAILURE" << std::endl;
+            std::cerr << "Expected error: " << expect_error << std::endl;
+            std::cerr << "Actual error: ";
+            if (actual_error == "") {
+                std::cerr << "(success)";
+            } else {
+                std::cerr << actual_error;
+            }
+            std::cerr << std::endl;
+            abort();
+        }
+    }
+
+    return result;
 }

@@ -7,32 +7,36 @@
 #include <iomanip>
 #include <sstream>
 
-namespace
-{
-const std::string escape_nul(const std::string &s) {
-	std::string::const_iterator it = std::find(s.begin(), s.end(), '\0');
-	if (it == s.end()) {
-		return s;
-	}
-	const std::string replacement = "\uFFFD";
-	const std::string nul_find("\0", 1);
-	std::string dest(s);
-	size_t start_pos = 0;
-	while ((start_pos = dest.find(nul_find, start_pos)) != std::string::npos) {
-		dest.replace(start_pos, /* length */ 1, replacement);
-		start_pos += replacement.length();
-	}
-	return dest;
+namespace {
+const std::string escape_nul(const std::string& s) {
+    std::string::const_iterator it = std::find(s.begin(), s.end(), '\0');
+    if (it == s.end()) {
+        return s;
+    }
+    const std::string replacement = "\uFFFD";
+    const std::string nul_find("\0", 1);
+    std::string dest(s);
+    size_t start_pos = 0;
+    while ((start_pos = dest.find(nul_find, start_pos)) != std::string::npos) {
+        dest.replace(start_pos, /* length */ 1, replacement);
+        start_pos += replacement.length();
+    }
+    return dest;
 }
-}
+}  // namespace
 
-WrappedError::WrappedError() : msg("Empty WrappedError") { msg = "Empty WrappedError"; }
+WrappedError::WrappedError() : msg("Empty WrappedError") {
+    msg = "Empty WrappedError";
+    inner_msg = "";
+}
 
 WrappedError::~WrappedError() {}
 
 WrappedError::WrappedError(const std::exception& wrapped) {
     std::stringstream ss;
-    ss << "Error: " << wrapped.what();
+    const char* inner = wrapped.what();
+    this->inner_msg = inner;
+    ss << "Error: " << this->inner_msg;
     this->msg = ss.str();
 }
 
@@ -68,7 +72,9 @@ WrappedError::WrappedError(const std::exception& wrapped, const Token& line_toke
             ss << "\033[0m";
         }
     }
-    ss << escape_nul(wrapped.what());
+    const char* inner = wrapped.what();
+    this->inner_msg = inner;
+    ss << inner;
     this->msg = ss.str();
 }
 
@@ -143,7 +149,8 @@ WrappedError::WrappedError(const std::string& what, const Token& line_token, con
         const Line& v = context.at(static_cast<size_t>(idx));
         print_line(v.GetSource());
     }
-    ss << escape_nul(what);
+    this->inner_msg = what;
+    ss << what;
     this->msg = ss.str();
 }
 
@@ -151,7 +158,10 @@ WrappedError::WrappedError(WrappedError const& src) { *this = src; }
 
 WrappedError& WrappedError::operator=(WrappedError const& rhs) {
     this->msg = rhs.msg;
+    this->inner_msg = rhs.inner_msg;
     return *this;
 }
 
 const char* WrappedError::what() const throw() { return msg.c_str(); }
+
+std::string WrappedError::GetInnerMessage() const { return inner_msg; }

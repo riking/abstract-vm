@@ -39,6 +39,8 @@ void Interpreter::RunLine(const Line &line) throw(StopExecution, IException) {
         case eInstructionType::COMMENT:
             // Comment
             break;
+        case eInstructionType::EXPECT_COMMENT:
+            break;
         case eInstructionType::PUSH:
             stack.Push(line.GetOperand());
             break;

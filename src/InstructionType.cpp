@@ -8,6 +8,8 @@ const char *eInstructionType_Symbol(eInstructionType type) {
     switch (type) {
         case eInstructionType::COMMENT:
             return "COMMENT";
+        case eInstructionType::EXPECT_COMMENT:
+            return "EXPECT-COMMENT";
         case eInstructionType::PUSH:
             return "PUSH";
         case eInstructionType::POP:
