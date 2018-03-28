@@ -11,7 +11,6 @@ enum class eInstructionType {
     POP,
     DUMP,
     ASSERT,
-    NEG_ASSERT, // Custom: Assert inequality
     ADD,
     SUB,
     MUL,

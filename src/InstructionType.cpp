@@ -11,7 +11,6 @@ const char *eInstructionType_Symbol(eInstructionType type) {
         case eInstructionType::POP: return "POP";
         case eInstructionType::DUMP: return "DUMP";
         case eInstructionType::ASSERT: return "ASSERT";
-        case eInstructionType::NEG_ASSERT: return "NEGASSERT";
         case eInstructionType::ADD: return "+";
         case eInstructionType::SUB: return "-";
         case eInstructionType::MUL: return "*";
@@ -21,4 +20,5 @@ const char *eInstructionType_Symbol(eInstructionType type) {
         case eInstructionType::EXIT: return "EXIT";
         case eInstructionType::END_OF_FILE: return ";;";
     }
+	return "<ERROR: Unrecognized instruction type>";
 }
