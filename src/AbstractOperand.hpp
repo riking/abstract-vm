@@ -89,7 +89,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         bool check;
         check = __builtin_add_overflow(lhsv, rhsv, &result);
         if (check) {
@@ -110,7 +110,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         result = lhsv + rhsv;
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
@@ -130,7 +130,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         bool check;
         check = __builtin_sub_overflow(lhsv, rhsv, &result);
         if (check) {
@@ -151,7 +151,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         result = lhsv - rhsv;
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
@@ -171,7 +171,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         bool check;
         check = __builtin_mul_overflow(lhsv, rhsv, &result);
         if (check) {
@@ -192,7 +192,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         result = lhsv * rhsv;
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
@@ -212,7 +212,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         bool check;
         if (rhsv == 0) {
             throw Div0Error();
@@ -236,7 +236,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         if (rhsv == 0) {
             throw Div0Error();
         }
@@ -261,7 +261,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         bool check;
         if (rhsv == 0) {
             throw Div0Error();
@@ -287,7 +287,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         if (rhsv == 0) {
             throw Div0Error();
         }
@@ -313,7 +313,7 @@ class AbstractOperand : public IOperand {
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
         ResultValueT lhsv = (ResultValueT)this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
-        ResultValueT result;
+        ResultValueT result = 0;
         if (rhsv == 0) {
             throw Div0Error();
         }
