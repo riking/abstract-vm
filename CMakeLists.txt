@@ -70,4 +70,13 @@ target_sources(abstract-vm PRIVATE
 
 # Flags
 target_compile_options(abstract-vm PRIVATE "-Wall" "-Wextra" "-Werror")
+set_target_properties(abstract-vm PROPERTIES
+	LINK_FLAGS "-Wall"
+	LINK_FLAGS "-Wextra"
+	LINK_FLAGS "-Werror"
+	)
 target_compile_options(abstract-vm PRIVATE "-g" "-fsanitize=address")
+set_target_properties(abstract-vm PROPERTIES
+	LINK_FLAGS "-g"
+	LINK_FLAGS "-fsanitize=address"
+	)
