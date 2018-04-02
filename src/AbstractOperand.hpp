@@ -87,7 +87,7 @@ class AbstractOperand : public IOperand {
     _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         bool check;
@@ -108,7 +108,7 @@ class AbstractOperand : public IOperand {
     _add(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         result = lhsv + rhsv;
@@ -128,7 +128,7 @@ class AbstractOperand : public IOperand {
     _sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         bool check;
@@ -149,7 +149,7 @@ class AbstractOperand : public IOperand {
     _sub(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         result = lhsv - rhsv;
@@ -169,7 +169,7 @@ class AbstractOperand : public IOperand {
     _mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         bool check;
@@ -190,7 +190,7 @@ class AbstractOperand : public IOperand {
     _mul(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         result = lhsv * rhsv;
@@ -210,7 +210,7 @@ class AbstractOperand : public IOperand {
     _div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         bool check;
@@ -234,7 +234,7 @@ class AbstractOperand : public IOperand {
     _div(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         if (rhsv == 0) {
@@ -259,7 +259,7 @@ class AbstractOperand : public IOperand {
     _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         bool check;
@@ -285,7 +285,7 @@ class AbstractOperand : public IOperand {
     _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         if (rhsv == 0) {
@@ -311,7 +311,7 @@ class AbstractOperand : public IOperand {
     _mod(AbstractOperand<RhsOpType, RHSValueT> const &rhs) const {
         constexpr eOperandType ResultOpType = (RhsOpType > Type) ? RhsOpType : Type;
         typedef typename std::conditional<(RhsOpType > Type), RHSValueT, ValueT>::type ResultValueT;
-        ResultValueT lhsv = (ResultValueT)this->value;
+        ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         if (rhsv == 0) {
