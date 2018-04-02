@@ -2,13 +2,14 @@
 // Created by Kane York on 1/9/18.
 //
 
-#include <fstream>
-#include <iostream>
-
 #include "Interpreter.hpp"
 #include "Parser.hpp"
 #include "StopExecution.hpp"
 #include "WrappedError.hpp"
+
+#include <algorithm>
+#include <fstream>
+#include <iostream>
 
 int main(int argc, char** argv) {
     char* file;
