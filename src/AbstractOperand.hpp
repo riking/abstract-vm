@@ -2,8 +2,8 @@
 // Created by Kane York on 1/9/18.
 //
 
-#ifndef PROJECT_INT_HPP
-#define PROJECT_INT_HPP
+#ifndef PROJECT_ABSTRACTOPERAND_HPP
+#define PROJECT_ABSTRACTOPERAND_HPP
 
 #include "Div0Error.hpp"
 #include "IOperand.hpp"
@@ -334,6 +334,14 @@ class AbstractOperand : public IOperand {
     ValueT value;
     // This is mutable to fix lifetime problems when lazy creating the string representation
     mutable std::unique_ptr<std::string> as_string;
+
+   private:
+    eOperandType larger_type(eOperandType type1, eOperandType type2) {
+        if (type1 > type2) {
+            return type1;
+        }
+        return type2;
+    }
 };
 
-#endif  // PROJECT_INT_HPP
+#endif  // PROJECT_ABSTRACTOPERAND_HPP
