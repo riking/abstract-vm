@@ -31,6 +31,8 @@ target_sources(abstract-vm PRIVATE
 	src/OperandType.hpp
 	src/AbstractOperand.cpp
 	src/AbstractOperand.hpp
+	src/OperandFactory.hpp
+	src/OperandFactory.cpp
 	)
 
 target_sources(abstract-vm PRIVATE
@@ -52,6 +54,8 @@ target_sources(abstract-vm PRIVATE
 	src/AssertionError.hpp
 	src/Div0Error.cpp
 	src/Div0Error.hpp
+	src/NumberParseError.cpp
+	src/NumberParseError.hpp
 	src/OverflowError.cpp
 	src/OverflowError.hpp
 	src/ParseError.cpp

@@ -7,14 +7,13 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 
-#include "Double.hpp"
-#include "Float.hpp"
-#include "Int16.hpp"
-#include "Int32.hpp"
-#include "Int8.hpp"
+#include "NumberParseError.hpp"
+#include "OperandFactory.hpp"
+#include "StaticError.hpp"
 
 Parser::Parser() : is_stdin(false), input(NULL) {}
 
@@ -112,7 +111,13 @@ const IOperand *Parser::ParseOperand(const Token *trimmed_line,
     }
 
     eOperandType op_type = RecognizeOperand(type.get());
-    const IOperand *op = MakeOperand(op_type, value.get());
+	OperandFactory factory{};
+    const IOperand *op;
+	try {
+		op = factory.createOperand(op_type, value->GetSource());
+	} catch (NumberParseError e) {
+		throw ParseError(second_part.get(), e.what());
+	}
 
     return op;
 }
@@ -134,80 +139,6 @@ eOperandType Parser::RecognizeOperand(const Token *type) throw(ParseError) {
         throw ParseError(type,
                          "Unrecognized operand type, expecting: int8 int16 "
                          "int32 float double");
-    }
-}
-
-const IOperand *Parser::MakeOperand(eOperandType op_type, const Token *value) throw(ParseError) {
-    size_t val_end_idx = 0;
-
-    switch (op_type) {
-        case eOperandType::INT_8:
-        case eOperandType::INT_16:
-        case eOperandType::INT_32: {
-            long long val_ll;
-            try {
-                val_ll = std::stoll(value->GetSource(), &val_end_idx);
-            } catch (std::invalid_argument) {
-                throw ParseError(value, "Failed to parse integer");
-            } catch (std::out_of_range) {
-                throw ParseError(value, "Value out of range for integer");
-            }
-            if (val_end_idx != value->GetLength()) {
-                throw ParseError(value, "Extra content after numeric value");
-            }
-            switch (op_type) {
-                case eOperandType::INT_8:
-                    if (val_ll < std::numeric_limits<int8_t>::min() ||
-                        val_ll > std::numeric_limits<int8_t>::max()) {
-                        throw ParseError(value, "Value out of range for int8");
-                    }
-                    return new Int8((int8_t)val_ll);
-                case eOperandType::INT_16:
-                    if (val_ll < std::numeric_limits<int16_t>::min() ||
-                        val_ll > std::numeric_limits<int16_t>::max()) {
-                        throw ParseError(value, "Value out of range for int16");
-                    }
-                    return new Int16((int16_t)val_ll);
-                case eOperandType::INT_32:
-                    if (val_ll < std::numeric_limits<int32_t>::min() ||
-                        val_ll > std::numeric_limits<int32_t>::max()) {
-                        throw ParseError(value, "Value out of range for int32");
-                    }
-                    return new Int32((int32_t)val_ll);
-                default:
-                    assert(false);
-            }
-        }
-        case eOperandType::FLOAT: {
-            float val_f;
-            try {
-                val_f = std::stof(value->GetSource(), &val_end_idx);
-            } catch (std::invalid_argument) {
-                throw ParseError(value, "Failed to parse float");
-            } catch (std::out_of_range) {
-                throw ParseError(value, "Value out of range for float");
-            }
-            if (val_end_idx != value->GetLength()) {
-                throw ParseError(value, "Extra content after numeric value");
-            }
-            return new Float(val_f);
-        }
-        case eOperandType::DOUBLE: {
-            double val_d;
-            try {
-                val_d = std::stod(value->GetSource(), &val_end_idx);
-            } catch (std::invalid_argument) {
-                throw ParseError(value, "Failed to parse double");
-            } catch (std::out_of_range) {
-                throw ParseError(value, "Value out of range for double");
-            }
-            if (val_end_idx != value->GetLength()) {
-                throw ParseError(value, "Extra content after numeric value");
-            }
-            return new Double(val_d);
-        }
-        default:
-            throw ParseError(value, "Invalid enum for operand type");
     }
 }
 

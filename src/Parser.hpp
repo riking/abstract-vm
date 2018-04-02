@@ -33,7 +33,6 @@ class Parser {
     eInstructionType RecognizeInstruction(const Token *token) throw(ParseError);
     const IOperand *ParseOperand(const Token *trimmed_line, size_t instr_len) throw(ParseError);
     eOperandType RecognizeOperand(const Token *type) throw(ParseError);
-    const IOperand *MakeOperand(eOperandType type, const Token *value) throw(ParseError);
 
     std::unique_ptr<const Token> TrimSpace(const Token *tok);
     std::unique_ptr<const Token> TrimCommentsAndSpaces(const Token *tok);
