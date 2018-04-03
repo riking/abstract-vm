@@ -8,7 +8,7 @@ NumberParseError::NumberParseError() {}
 
 NumberParseError::~NumberParseError() {}
 
-NumberParseError::NumberParseError(const std::string &value, const std::string &message)
+NumberParseError::NumberParseError(const std::string value, const std::string message)
     : value(value), msg() {
     msg = message + ": " + value;
 }

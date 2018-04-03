@@ -15,7 +15,7 @@
 class NumberParseError : public IException {
    public:
     NumberParseError();
-    NumberParseError(const std::string &value, const std::string &message);
+    NumberParseError(const std::string value, const std::string message);
     NumberParseError(NumberParseError const &src);
     virtual ~NumberParseError();
     NumberParseError &operator=(NumberParseError const &rhs);

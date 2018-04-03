@@ -94,10 +94,8 @@ class AbstractOperand : public IOperand {
         if (check) {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -113,10 +111,8 @@ class AbstractOperand : public IOperand {
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -133,10 +129,8 @@ class AbstractOperand : public IOperand {
         if (check) {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -152,10 +146,8 @@ class AbstractOperand : public IOperand {
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -172,10 +164,8 @@ class AbstractOperand : public IOperand {
         if (check) {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -191,10 +181,8 @@ class AbstractOperand : public IOperand {
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -235,10 +223,8 @@ class AbstractOperand : public IOperand {
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     };
 
     // Modulo
@@ -260,10 +246,8 @@ class AbstractOperand : public IOperand {
         if (check) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -287,10 +271,8 @@ class AbstractOperand : public IOperand {
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -312,10 +294,8 @@ class AbstractOperand : public IOperand {
         if (std::isinf(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     };
 
     ValueT value;

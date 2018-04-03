@@ -51,7 +51,11 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
         } catch (ParseError e) {
             std::cout << "Parse error. Message: " << e.GetMessage() << std::endl;
             throw WrappedError(e.GetMessage(), line_token, e.GetToken(), *(full_source.get()));
+        } catch (const IException &e) {
+            std::cout << "Parse error. Message: " << e.what() << std::endl;
+            throw WrappedError(e, line_token, *(full_source.get()));
         } catch (std::exception e) {
+            std::cout << "Parse error. Message: " << e.what() << std::endl;
             throw WrappedError(e, line_token, *(full_source.get()));
         }
     }
