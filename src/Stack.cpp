@@ -7,10 +7,6 @@
 
 #include <memory>
 
-namespace {
-Int8 g_identity = Int8(0);
-}
-
 Stack::Stack() : stack_() {}
 
 Stack::Stack(Stack const &src) : stack_() { (*this) = src; }
@@ -27,8 +23,10 @@ void Stack::empty_() {
 Stack &Stack::operator=(Stack const &rhs) {
     this->empty_();
 
+    OperandFactory factory{};
+
     for (const IOperand *op : rhs.stack_) {
-        const IOperand *clone = op->operator+(g_identity);
+        const IOperand *clone = factory.createOperand(op->getType(), op->toString());
         stack_.push_back(clone);
     }
 
@@ -37,7 +35,8 @@ Stack &Stack::operator=(Stack const &rhs) {
 
 void Stack::Push(const IOperand *value) throw(IException) {
     // Need to create an owned copy so destructor functions correctly
-    const IOperand *owned_copy = g_identity + *value;
+    OperandFactory factory{};
+    const IOperand *owned_copy = factory.createOperand(value->getType(), value->toString());
     stack_.push_back(owned_copy);
 }
 

@@ -80,8 +80,11 @@ set_target_properties(abstract-vm PROPERTIES
 	LINK_FLAGS "-Wextra"
 	LINK_FLAGS "-Werror"
 	)
-target_compile_options(abstract-vm PRIVATE "-g" "-fsanitize=address")
-set_target_properties(abstract-vm PROPERTIES
-	LINK_FLAGS "-g"
-	LINK_FLAGS "-fsanitize=address"
-	)
+
+if(DEBUG)
+	target_compile_options(abstract-vm PRIVATE "-g" "-fsanitize=address")
+	set_target_properties(abstract-vm PROPERTIES
+		LINK_FLAGS "-g"
+		LINK_FLAGS "-fsanitize=address"
+		)
+endif()

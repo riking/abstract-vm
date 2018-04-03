@@ -3,7 +3,9 @@
 //
 
 #include "Line.hpp"
-#include "Int8.hpp"
+
+#include "InstructionType.hpp"
+#include "OperandFactory.hpp"
 
 Line::Line() : type(eInstructionType::COMMENT), op(NULL), source(Token()), instr(Token()) {}
 
@@ -23,8 +25,8 @@ Line::~Line() {
 
 Line::Line(Line const &src) : type(src.type), op(NULL), source(src.source), instr(src.instr) {
     if (src.op) {
-        Int8 identity = Int8(0);
-        this->op = (*src.op) + identity;
+        OperandFactory factory{};
+        this->op = factory.createOperand(src.op->getType(), src.op->toString());
     } else {
         this->op = NULL;
     }
@@ -38,8 +40,10 @@ Line &Line::operator=(const Line &rhs) {
         delete this->op;
         this->op = NULL;
     }
-    Int8 identity = Int8(0);
-    this->op = (*rhs.op) + identity;
+    if (rhs.op) {
+        OperandFactory factory{};
+        this->op = factory.createOperand(rhs.op->getType(), rhs.op->toString());
+    }
     return *this;
 }
 
