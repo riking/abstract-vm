@@ -33,14 +33,14 @@ Stack &Stack::operator=(Stack const &rhs) {
     return *this;
 }
 
-void Stack::Push(const IOperand *value) throw(IException) {
+void Stack::Push(const IOperand *value) {
     // Need to create an owned copy so destructor functions correctly
     OperandFactory factory{};
     const IOperand *owned_copy = factory.createOperand(value->getType(), value->toString());
     stack_.push_back(owned_copy);
 }
 
-void Stack::Pop() throw(IException) {
+void Stack::Pop() {
     if (stack_.size() == 0) {
         throw StackEmptyError();
     }
@@ -49,14 +49,14 @@ void Stack::Pop() throw(IException) {
     // drop 'op'
 }
 
-void Stack::Dump(std::ostream &out) const throw(IException) {
+void Stack::Dump(std::ostream &out) const {
     for (auto it = stack_.rbegin(); it != stack_.rend(); ++it) {
         const IOperand *op = *it;
         out << op->toString() << std::endl;
     }
 }
 
-void Stack::Assert(const IOperand *expected) throw(IException) {
+void Stack::Assert(const IOperand *expected) {
     if (stack_.size() == 0) {
         throw StackEmptyError();
     }
@@ -72,7 +72,7 @@ void Stack::Assert(const IOperand *expected) throw(IException) {
     return;
 }
 
-void Stack::Add() throw(IException) {
+void Stack::Add() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
@@ -84,7 +84,7 @@ void Stack::Add() throw(IException) {
     stack_.push_back(push);
 }
 
-void Stack::Sub() throw(IException) {
+void Stack::Sub() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
@@ -96,7 +96,7 @@ void Stack::Sub() throw(IException) {
     stack_.push_back(push);
 }
 
-void Stack::Mul() throw(IException) {
+void Stack::Mul() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
@@ -108,7 +108,7 @@ void Stack::Mul() throw(IException) {
     stack_.push_back(push);
 }
 
-void Stack::Div() throw(IException) {
+void Stack::Div() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
@@ -120,7 +120,7 @@ void Stack::Div() throw(IException) {
     stack_.push_back(push);
 }
 
-void Stack::Mod() throw(IException) {
+void Stack::Mod() {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
@@ -132,7 +132,7 @@ void Stack::Mod() throw(IException) {
     stack_.push_back(push);
 }
 
-void Stack::Print(std::ostream &out) throw(IException) {
+void Stack::Print(std::ostream &out) {
     if (stack_.size() == 0) {
         throw StackEmptyError();
     }
@@ -147,4 +147,4 @@ void Stack::Print(std::ostream &out) throw(IException) {
     out << char(val);
 }
 
-void Stack::Exit() throw(StopExecution) { throw StopExecution(); }
+void Stack::Exit() { throw StopExecution(); }

@@ -23,12 +23,11 @@ const std::array<OperandFactory::FactoryFunction, 5> OperandFactory::factory_met
     &OperandFactory::createFloat, &OperandFactory::createDouble,
 };
 
-IOperand const *OperandFactory::createOperand(eOperandType type, std::string const &value) const
-    throw(IException) {
+IOperand const *OperandFactory::createOperand(eOperandType type, std::string const &value) const {
     return (this->*(factory_methods_by_type[static_cast<int>(type)]))(value);
 }
 
-IOperand const *OperandFactory::createInt8(std::string const &value) const throw(IException) {
+IOperand const *OperandFactory::createInt8(std::string const &value) const {
     size_t val_end_idx;
     long long val_ll;
     try {
@@ -47,7 +46,7 @@ IOperand const *OperandFactory::createInt8(std::string const &value) const throw
     }
     return new Int8((int8_t)val_ll);
 }
-IOperand const *OperandFactory::createInt16(std::string const &value) const throw(IException) {
+IOperand const *OperandFactory::createInt16(std::string const &value) const {
     size_t val_end_idx;
     long long val_ll;
     try {
@@ -67,7 +66,7 @@ IOperand const *OperandFactory::createInt16(std::string const &value) const thro
     return new Int16((int16_t)val_ll);
 }
 
-IOperand const *OperandFactory::createInt32(std::string const &value) const throw(IException) {
+IOperand const *OperandFactory::createInt32(std::string const &value) const {
     size_t val_end_idx;
     long long val_ll;
     try {
@@ -87,7 +86,7 @@ IOperand const *OperandFactory::createInt32(std::string const &value) const thro
     return new Int32((int32_t)val_ll);
 }
 
-IOperand const *OperandFactory::createFloat(std::string const &value) const throw(IException) {
+IOperand const *OperandFactory::createFloat(std::string const &value) const {
     size_t val_end_idx;
     float val_f;
     try {
@@ -103,7 +102,7 @@ IOperand const *OperandFactory::createFloat(std::string const &value) const thro
     return new Float(val_f);
 }
 
-IOperand const *OperandFactory::createDouble(std::string const &value) const throw(IException) {
+IOperand const *OperandFactory::createDouble(std::string const &value) const {
     size_t val_end_idx;
     double val_d;
     try {

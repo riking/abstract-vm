@@ -21,17 +21,20 @@ class Stack {
     virtual ~Stack();
     Stack &operator=(Stack const &rhs);
 
-    void Push(const IOperand *value) throw(IException);
-    void Pop() throw(IException);
-    void Dump(std::ostream &out) const throw(IException);
-    void Assert(const IOperand *value) throw(IException);
-    void Add() throw(IException);
-    void Sub() throw(IException);
-    void Mul() throw(IException);
-    void Div() throw(IException);
-    void Mod() throw(IException);
-    void Print(std::ostream &out) throw(IException);
-    void Exit() throw(StopExecution);
+    // All operations can throw IException
+    void Push(const IOperand *value);
+    void Pop();
+    void Dump(std::ostream &out) const;
+    // @throws AssertionError
+    void Assert(const IOperand *value);
+    void Add();
+    void Sub();
+    void Mul();
+    void Div();
+    void Mod();
+    void Print(std::ostream &out);
+    // @throws StopExecution
+    void Exit();
 
    private:
     void empty_();

@@ -17,8 +17,7 @@ Interpreter &Interpreter::operator=(const Interpreter &rhs) {
     return *this;
 }
 
-void Interpreter::Run(std::unique_ptr<std::vector<Line>> program) throw(StopExecution,
-                                                                        WrappedError) {
+void Interpreter::Run(std::unique_ptr<std::vector<Line>> program) {
     for (const Line &line : *program) {
         executing_line++;
         try {
@@ -34,7 +33,7 @@ void Interpreter::Run(std::unique_ptr<std::vector<Line>> program) throw(StopExec
     throw WrappedError(StaticError("Reached end of file without 'exit' instruction"));
 }
 
-void Interpreter::RunLine(const Line &line) throw(StopExecution, IException) {
+void Interpreter::RunLine(const Line &line) {
     switch (line.GetType()) {
         case eInstructionType::COMMENT:
             // Comment

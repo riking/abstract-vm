@@ -19,8 +19,8 @@ class Parser {
     virtual ~Parser();
     Parser &operator=(Parser const &rhs);
 
-    std::unique_ptr<std::vector<Line>> ParseProgram(std::istream &input,
-                                                    bool is_stdin) throw(WrappedError);
+    // @throws WrappedError
+    std::unique_ptr<std::vector<Line>> ParseProgram(std::istream &input, bool is_stdin);
 
    private:
     /**
@@ -29,10 +29,14 @@ class Parser {
     bool is_stdin;
     std::istream *input;
 
-    Line ParseLine(const Token &line_token) throw(ParseError);
-    eInstructionType RecognizeInstruction(const Token *token) throw(ParseError);
-    const IOperand *ParseOperand(const Token *trimmed_line, size_t instr_len) throw(ParseError);
-    eOperandType RecognizeOperand(const Token *type) throw(ParseError);
+    // @throws ParseError
+    Line ParseLine(const Token &line_token);
+    // @throws ParseError
+    eInstructionType RecognizeInstruction(const Token *token);
+    // @throws ParseError
+    const IOperand *ParseOperand(const Token *trimmed_line, size_t instr_len);
+    // @throws ParseError
+    eOperandType RecognizeOperand(const Token *type);
 
     std::unique_ptr<const Token> TrimSpace(const Token *tok);
     std::unique_ptr<const Token> TrimCommentsAndSpaces(const Token *tok);

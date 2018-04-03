@@ -32,8 +32,8 @@ Parser &Parser::operator=(Parser const &rhs) {
     return *this;
 }
 
-std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
-                                                        bool is_stdin) throw(WrappedError) {
+// @throws WrappedError
+std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input, bool is_stdin) {
     this->input = &input;
     this->is_stdin = is_stdin;
 
@@ -51,9 +51,6 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
         } catch (ParseError e) {
             std::cout << "Parse error. Message: " << e.GetMessage() << std::endl;
             throw WrappedError(e.GetMessage(), line_token, e.GetToken(), *(full_source.get()));
-        } catch (const IException &e) {
-            std::cout << "Parse error. Message: " << e.what() << std::endl;
-            throw WrappedError(e, line_token, *(full_source.get()));
         } catch (std::exception e) {
             std::cout << "Parse error. Message: " << e.what() << std::endl;
             throw WrappedError(e, line_token, *(full_source.get()));
@@ -65,7 +62,8 @@ std::unique_ptr<std::vector<Line>> Parser::ParseProgram(std::istream &input,
     return full_source;
 }
 
-Line Parser::ParseLine(const Token &line_token) throw(ParseError) {
+// @throws ParseError
+Line Parser::ParseLine(const Token &line_token) {
     std::unique_ptr<const Token> trimmed = TrimCommentsAndSpaces(&line_token);
     if (trimmed->GetLength() == 0) {
         return Line(line_token);
@@ -84,8 +82,8 @@ Line Parser::ParseLine(const Token &line_token) throw(ParseError) {
     }
 }
 
-const IOperand *Parser::ParseOperand(const Token *trimmed_line,
-                                     size_t instr_len) throw(ParseError) {
+// @throws ParseError
+const IOperand *Parser::ParseOperand(const Token *trimmed_line, size_t instr_len) {
     std::unique_ptr<const Token> second_part_notrim =
         trimmed_line->SubToken(instr_len, trimmed_line->GetLength() - instr_len);
     std::unique_ptr<const Token> second_part = TrimSpace(second_part_notrim.get());
@@ -126,7 +124,8 @@ const IOperand *Parser::ParseOperand(const Token *trimmed_line,
     return op;
 }
 
-eOperandType Parser::RecognizeOperand(const Token *type) throw(ParseError) {
+// @throws ParseError
+eOperandType Parser::RecognizeOperand(const Token *type) {
     const std::string &op_type_str = type->GetSource();
     if (op_type_str == "int8") {
         return eOperandType::INT_8;
@@ -146,7 +145,8 @@ eOperandType Parser::RecognizeOperand(const Token *type) throw(ParseError) {
     }
 }
 
-eInstructionType Parser::RecognizeInstruction(const Token *token) throw(ParseError) {
+// @throws ParseError
+eInstructionType Parser::RecognizeInstruction(const Token *token) {
     const std::string &word = token->GetSource();
     if (this->is_stdin && word == ";;") {
         return eInstructionType::END_OF_FILE;
