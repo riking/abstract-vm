@@ -46,11 +46,13 @@ int main(int argc, char** argv) {
         if (it != program->end()) {
             const Line& l = *it;
             const Token& instr_tok = l.GetInstrToken();
-            constexpr int instr_len = sizeof(";EXPECT ") - 1;
             // ";EXPECT ".length
-            std::unique_ptr<Token> expect_tok =
-                instr_tok.SubToken(instr_len, instr_tok.GetLength() - instr_len);
-            expect_error = expect_tok->GetSource();
+            constexpr int instr_len = sizeof(";EXPECT ") - 1;
+            if (instr_tok.GetLength() > instr_len) {
+                std::unique_ptr<Token> expect_tok =
+                    instr_tok.SubToken(instr_len, instr_tok.GetLength() - instr_len);
+                expect_error = expect_tok->GetSource();
+            }
         }
 
         Interpreter i;

@@ -224,7 +224,9 @@ std::unique_ptr<const Token> Parser::TrimCommentsAndSpaces(const Token *token) {
                 std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace)))
                     .base();
             len = right_bound - left_bound;
-            return token->SubToken(offset, len);
+            if (len > 0) {
+                return token->SubToken(offset, len);
+            }
         }
         return token->SubToken(offset, 0);
     }
