@@ -111,13 +111,13 @@ const IOperand *Parser::ParseOperand(const Token *trimmed_line,
     }
 
     eOperandType op_type = RecognizeOperand(type.get());
-	OperandFactory factory{};
+    OperandFactory factory{};
     const IOperand *op;
-	try {
-		op = factory.createOperand(op_type, value->GetSource());
-	} catch (NumberParseError e) {
-		throw ParseError(second_part.get(), e.what());
-	}
+    try {
+        op = factory.createOperand(op_type, value->GetSource());
+    } catch (NumberParseError e) {
+        throw ParseError(second_part.get(), e.what());
+    }
 
     return op;
 }
