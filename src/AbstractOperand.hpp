@@ -27,9 +27,15 @@ class Double;
 template <eOperandType Type, typename ValueT>
 class AbstractOperand : public IOperand {
    public:
-    ~AbstractOperand(){};
-
+    AbstractOperand() : value(0), as_string(){};
     AbstractOperand(ValueT value) : value(value), as_string(){};
+
+    AbstractOperand(AbstractOperand &src) : value(src.value), as_string(src.as_string){};
+    ~AbstractOperand(){};
+    AbstractOperand &operator=(AbstractOperand const &rhs) {
+        this->value = rhs.value;
+        this->as_string = rhs.as_string;
+    }
 
     virtual int getPrecision(void) const {
         if (Type == eOperandType::INT_8) {
