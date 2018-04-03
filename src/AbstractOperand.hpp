@@ -2,8 +2,8 @@
 // Created by Kane York on 1/9/18.
 //
 
-#ifndef PROJECT_ABSTRACTOPERAND_HPP
-#define PROJECT_ABSTRACTOPERAND_HPP
+#ifndef ABSTRACTVM_ABSTRACTOPERAND_HPP
+#define ABSTRACTVM_ABSTRACTOPERAND_HPP
 
 #include "Div0Error.hpp"
 #include "IOperand.hpp"
@@ -303,4 +303,4 @@ class AbstractOperand : public IOperand {
     mutable std::unique_ptr<std::string> as_string;
 };
 
-#endif  // PROJECT_ABSTRACTOPERAND_HPP
+#endif  // ABSTRACTVM_ABSTRACTOPERAND_HPP

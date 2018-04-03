@@ -2,8 +2,8 @@
 // Created by Kane York on 1/10/18.
 //
 
-#ifndef PROJECT_INSTRUCTIONTYPE_HPP
-#define PROJECT_INSTRUCTIONTYPE_HPP
+#ifndef ABSTRACTVM_INSTRUCTIONTYPE_HPP
+#define ABSTRACTVM_INSTRUCTIONTYPE_HPP
 
 enum class eInstructionType {
     COMMENT,
@@ -24,4 +24,4 @@ enum class eInstructionType {
 
 const char *eInstructionType_Symbol(eInstructionType type);
 
-#endif  // PROJECT_INSTRUCTIONTYPE_HPP
+#endif  // ABSTRACTVM_INSTRUCTIONTYPE_HPP

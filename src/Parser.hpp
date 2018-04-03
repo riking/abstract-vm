@@ -2,8 +2,8 @@
 // Created by Kane York on 1/10/18.
 //
 
-#ifndef PROJECT_PARSER_HPP
-#define PROJECT_PARSER_HPP
+#ifndef ABSTRACTVM_PARSER_HPP
+#define ABSTRACTVM_PARSER_HPP
 
 #include <istream>
 #include <memory>
@@ -42,4 +42,5 @@ class Parser {
     std::unique_ptr<const Token> TrimCommentsAndSpaces(const Token *tok);
     std::unique_ptr<const Token> GetFirstWord(const Token *tok);
 };
-#endif  // PROJECT_PARSER_HPP
+
+#endif  // ABSTRACTVM_PARSER_HPP

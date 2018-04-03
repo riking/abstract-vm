@@ -2,8 +2,8 @@
 // Created by Kane York on 1/9/18.
 //
 
-#ifndef PROJECT_DOUBLE_HPP
-#define PROJECT_DOUBLE_HPP
+#ifndef ABSTRACTVM_DOUBLE_HPP
+#define ABSTRACTVM_DOUBLE_HPP
 
 #include "AbstractOperand.hpp"
 #include "OperandType.hpp"
@@ -23,4 +23,4 @@ class Double : public AbstractOperand<eOperandType::DOUBLE, double> {
     virtual IOperand const *operator%(IOperand const &rhs) const;
 };
 
-#endif  // PROJECT_DOUBLE_HPP
+#endif  // ABSTRACTVM_DOUBLE_HPP

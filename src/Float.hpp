@@ -2,8 +2,8 @@
 // Created by Kane York on 1/9/18.
 //
 
-#ifndef PROJECT_FLOAT_HPP
-#define PROJECT_FLOAT_HPP
+#ifndef ABSTRACTVM_FLOAT_HPP
+#define ABSTRACTVM_FLOAT_HPP
 
 #include "AbstractOperand.hpp"
 #include "OperandType.hpp"
@@ -23,4 +23,4 @@ class Float : public AbstractOperand<eOperandType::FLOAT, float> {
     virtual IOperand const *operator%(IOperand const &rhs) const;
 };
 
-#endif  // PROJECT_FLOAT_HPP
+#endif  // ABSTRACTVM_FLOAT_HPP

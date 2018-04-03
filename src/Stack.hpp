@@ -2,8 +2,8 @@
 // Created by Kane York on 1/9/18.
 //
 
-#ifndef PROJECT_STACK_HPP
-#define PROJECT_STACK_HPP
+#ifndef ABSTRACTVM_STACK_HPP
+#define ABSTRACTVM_STACK_HPP
 
 #include <vector>
 
@@ -42,4 +42,4 @@ class Stack {
     std::vector<const IOperand *> stack_;
 };
 
-#endif  // PROJECT_STACK_HPP
+#endif  // ABSTRACTVM_STACK_HPP

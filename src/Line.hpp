@@ -2,8 +2,8 @@
 // Created by Kane York on 1/10/18.
 //
 
-#ifndef PROJECT_LINE_HPP
-#define PROJECT_LINE_HPP
+#ifndef ABSTRACTVM_LINE_HPP
+#define ABSTRACTVM_LINE_HPP
 
 #include "IOperand.hpp"
 #include "InstructionType.hpp"
@@ -48,4 +48,4 @@ class Line {
     Token instr;
 };
 
-#endif  // PROJECT_LINE_HPP
+#endif  // ABSTRACTVM_LINE_HPP
