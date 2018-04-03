@@ -5,12 +5,13 @@
 #ifndef ABSTRACTVM_OVERFLOWERROR_HPP
 #define ABSTRACTVM_OVERFLOWERROR_HPP
 
-#include <exception>
-#include <string>
 #include "IException.hpp"
 #include "IOperand.hpp"
 #include "InstructionType.hpp"
 #include "OperandType.hpp"
+
+#include <exception>
+#include <string>
 
 /**
  * An error caused via arithmatic overflow.

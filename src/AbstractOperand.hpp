@@ -31,7 +31,7 @@ class AbstractOperand : public IOperand {
     AbstractOperand(ValueT value) : value(value), as_string(){};
 
     AbstractOperand(AbstractOperand &src) : value(src.value), as_string(src.as_string){};
-    ~AbstractOperand(){};
+    virtual ~AbstractOperand(){};
     AbstractOperand &operator=(AbstractOperand const &rhs) {
         this->value = rhs.value;
         this->as_string = rhs.as_string;

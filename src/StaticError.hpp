@@ -5,9 +5,9 @@
 #ifndef ABSTRACTVM_STATICERROR_HPP
 #define ABSTRACTVM_STATICERROR_HPP
 
-#include <exception>
-#include <string>
 #include "IException.hpp"
+
+#include <string>
 
 /**
  * An error caused independent of the input.

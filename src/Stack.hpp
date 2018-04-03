@@ -5,14 +5,14 @@
 #ifndef ABSTRACTVM_STACK_HPP
 #define ABSTRACTVM_STACK_HPP
 
-#include <vector>
-
 #include "AssertionError.hpp"
 #include "Div0Error.hpp"
 #include "IOperand.hpp"
 #include "PrintError.hpp"
 #include "StackEmptyError.hpp"
 #include "StopExecution.hpp"
+
+#include <vector>
 
 class Stack {
    public:
