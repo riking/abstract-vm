@@ -5,11 +5,11 @@
 #include "Stack.hpp"
 #include "Int8.hpp"
 
+#include <memory>
+
 namespace {
 Int8 g_identity = Int8(0);
 }
-
-// bool operator==(IOperand const &self, IOperand const &rhs);
 
 Stack::Stack() : stack_() {}
 
@@ -19,20 +19,16 @@ Stack::~Stack() { this->empty_(); }
 
 void Stack::empty_() {
     while (this->stack_.size()) {
-        const IOperand *op = stack_.back();
+        std::unique_ptr<const IOperand> op(stack_.back());
         stack_.pop_back();
-        delete op;
     }
 }
 
 Stack &Stack::operator=(Stack const &rhs) {
     this->empty_();
 
-    // additive identity at lowest available precision
-    const Int8 min_prec_zero = Int8(0);
-
     for (const IOperand *op : rhs.stack_) {
-        const IOperand *clone = op->operator+(min_prec_zero);
+        const IOperand *clone = op->operator+(g_identity);
         stack_.push_back(clone);
     }
 
@@ -49,9 +45,9 @@ void Stack::Pop() throw(IException) {
     if (stack_.size() == 0) {
         throw StackEmptyError();
     }
-    const IOperand *op = stack_.back();
+    std::unique_ptr<const IOperand> op(stack_.back());
     stack_.pop_back();
-    delete op;
+    // drop 'op'
 }
 
 void Stack::Dump(std::ostream &out) const throw(IException) {
@@ -81,13 +77,11 @@ void Stack::Add() throw(IException) {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
-    const IOperand *rhs = stack_.back();
+    std::unique_ptr<const IOperand> rhs(stack_.back());
     stack_.pop_back();
-    const IOperand *lhs = stack_.back();
+    std::unique_ptr<const IOperand> lhs(stack_.back());
     stack_.pop_back();
     const IOperand *push = (*lhs) + (*rhs);
-    delete rhs;
-    delete lhs;
     stack_.push_back(push);
 }
 
@@ -95,13 +89,11 @@ void Stack::Sub() throw(IException) {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
-    const IOperand *rhs = stack_.back();
+    std::unique_ptr<const IOperand> rhs(stack_.back());
     stack_.pop_back();
-    const IOperand *lhs = stack_.back();
+    std::unique_ptr<const IOperand> lhs(stack_.back());
     stack_.pop_back();
     const IOperand *push = (*lhs) - (*rhs);
-    delete rhs;
-    delete lhs;
     stack_.push_back(push);
 }
 
@@ -109,13 +101,11 @@ void Stack::Mul() throw(IException) {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
-    const IOperand *rhs = stack_.back();
+    std::unique_ptr<const IOperand> rhs(stack_.back());
     stack_.pop_back();
-    const IOperand *lhs = stack_.back();
+    std::unique_ptr<const IOperand> lhs(stack_.back());
     stack_.pop_back();
     const IOperand *push = (*lhs) * (*rhs);
-    delete rhs;
-    delete lhs;
     stack_.push_back(push);
 }
 
@@ -123,13 +113,11 @@ void Stack::Div() throw(IException) {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
-    const IOperand *rhs = stack_.back();
+    std::unique_ptr<const IOperand> rhs(stack_.back());
     stack_.pop_back();
-    const IOperand *lhs = stack_.back();
+    std::unique_ptr<const IOperand> lhs(stack_.back());
     stack_.pop_back();
     const IOperand *push = (*lhs) / (*rhs);
-    delete rhs;
-    delete lhs;
     stack_.push_back(push);
 }
 
@@ -137,13 +125,11 @@ void Stack::Mod() throw(IException) {
     if (stack_.size() < 2) {
         throw StackEmptyError();
     }
-    const IOperand *rhs = stack_.back();
+    std::unique_ptr<const IOperand> rhs(stack_.back());
     stack_.pop_back();
-    const IOperand *lhs = stack_.back();
+    std::unique_ptr<const IOperand> lhs(stack_.back());
     stack_.pop_back();
     const IOperand *push = (*lhs) % (*rhs);
-    delete rhs;
-    delete lhs;
     stack_.push_back(push);
 }
 
