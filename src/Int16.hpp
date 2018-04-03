@@ -21,9 +21,6 @@ class Int16 : public AbstractOperand<eOperandType::INT_16, int16_t> {
     virtual IOperand const *operator*(IOperand const &rhs) const;
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
-
-   protected:
-    virtual IOperand const *make_self(int16_t val) const;
 };
 
 #endif  // ABSTRACTVM_INT16_HPP

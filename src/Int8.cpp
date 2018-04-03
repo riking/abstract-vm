@@ -22,8 +22,6 @@ Int8 &Int8::operator=(Int8 const &rhs) {
     return *this;
 }
 
-IOperand const *Int8::make_self(int8_t val) const { return new Int8(val); }
-
 int8_t Int8::GetInt8() const { return this->value; }
 
 IOperand const *Int8::operator+(IOperand const &rhs) const {

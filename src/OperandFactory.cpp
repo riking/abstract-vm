@@ -64,8 +64,7 @@ IOperand const *OperandFactory::createInt16(std::string const &value) const thro
         val_ll > std::numeric_limits<int16_t>::max()) {
         throw NumberParseError(value, "Value out of range for int16");
     }
-    const IOperand *ret = new Int16((int16_t)val_ll);
-    return ret;
+    return new Int16((int16_t)val_ll);
 }
 
 IOperand const *OperandFactory::createInt32(std::string const &value) const throw(IException) {

@@ -21,9 +21,6 @@ class Int32 : public AbstractOperand<eOperandType::INT_32, int32_t> {
     virtual IOperand const *operator*(IOperand const &rhs) const;
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
-
-   protected:
-    virtual IOperand const *make_self(int32_t val) const;
 };
 
 #endif  // ABSTRACTVM_INT32_HPP

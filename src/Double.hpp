@@ -21,9 +21,6 @@ class Double : public AbstractOperand<eOperandType::DOUBLE, double> {
     virtual IOperand const *operator*(IOperand const &rhs) const;
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
-
-   protected:
-    virtual IOperand const *make_self(double val) const;
 };
 
 #endif  // PROJECT_DOUBLE_HPP

@@ -22,8 +22,6 @@ Int32 &Int32::operator=(Int32 const &rhs) {
     return *this;
 }
 
-IOperand const *Int32::make_self(int32_t val) const { return new Int32(val); }
-
 IOperand const *Int32::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:

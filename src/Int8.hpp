@@ -23,9 +23,6 @@ class Int8 : public AbstractOperand<eOperandType::INT_8, int8_t> {
     virtual IOperand const *operator%(IOperand const &rhs) const;
 
     int8_t GetInt8() const;
-
-   protected:
-    virtual IOperand const *make_self(int8_t val) const;
 };
 
 #endif  // ABSTRACTVM_INT8_HPP

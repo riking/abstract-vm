@@ -21,9 +21,6 @@ class Float : public AbstractOperand<eOperandType::FLOAT, float> {
     virtual IOperand const *operator*(IOperand const &rhs) const;
     virtual IOperand const *operator/(IOperand const &rhs) const;
     virtual IOperand const *operator%(IOperand const &rhs) const;
-
-   protected:
-    virtual IOperand const *make_self(float val) const;
 };
 
 #endif  // PROJECT_FLOAT_HPP

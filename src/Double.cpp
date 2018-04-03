@@ -22,8 +22,6 @@ Double &Double::operator=(Double const &rhs) {
     return *this;
 }
 
-IOperand const *Double::make_self(double val) const { return new Double(val); }
-
 IOperand const *Double::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:

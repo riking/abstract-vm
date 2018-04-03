@@ -22,8 +22,6 @@ Float &Float::operator=(Float const &rhs) {
     return *this;
 }
 
-IOperand const *Float::make_self(float val) const { return new Float(val); }
-
 IOperand const *Float::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:

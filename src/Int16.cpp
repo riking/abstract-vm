@@ -22,8 +22,6 @@ Int16 &Int16::operator=(Int16 const &rhs) {
     return *this;
 }
 
-IOperand const *Int16::make_self(int16_t val) const { return new Int16(val); }
-
 IOperand const *Int16::operator+(IOperand const &rhs) const {
     switch (rhs.getType()) {
         case eOperandType::INT_8:
