@@ -18,10 +18,10 @@
 #include "Int8.hpp"
 #include "NumberParseError.hpp"
 
-const std::array<OperandFactory::FactoryFunction, 5> OperandFactory::factory_methods_by_type = {
+const std::array<OperandFactory::FactoryFunction, 5> OperandFactory::factory_methods_by_type = {{
     &OperandFactory::createInt8,  &OperandFactory::createInt16,  &OperandFactory::createInt32,
     &OperandFactory::createFloat, &OperandFactory::createDouble,
-};
+}};
 
 IOperand const *OperandFactory::createOperand(eOperandType type, std::string const &value) const {
     return (this->*(factory_methods_by_type[static_cast<int>(type)]))(value);
