@@ -6,11 +6,13 @@
 #    By: kyork <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/09 13:08:18 by kyork             #+#    #+#              #
-#    Updated: 2018/03/28 10:32:07 by kyork            ###   ########.fr        #
+#    Updated: 2018/04/06 15:35:05 by kyork            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = abstract-vm
+
+CLANGFORMAT ?= clang-format
 
 $(NAME): Build/Makefile
 	make -C Build $(NAME)
@@ -30,5 +32,5 @@ fclean:
 re: fclean all
 
 format:
-	clang-format -style=file -i src/*.cpp src/*.hpp
+	$(CLANGFORMAT) -style=file -i src/*.cpp src/*.hpp
 

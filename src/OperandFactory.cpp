@@ -19,7 +19,7 @@
 #include "NumberParseError.hpp"
 
 const std::array<OperandFactory::FactoryFunction, 5> OperandFactory::factory_methods_by_type = {{
-    &OperandFactory::createInt8,  &OperandFactory::createInt16,  &OperandFactory::createInt32,
+    &OperandFactory::createInt8, &OperandFactory::createInt16, &OperandFactory::createInt32,
     &OperandFactory::createFloat, &OperandFactory::createDouble,
 }};
 
