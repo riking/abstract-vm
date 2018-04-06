@@ -207,10 +207,8 @@ class AbstractOperand : public IOperand {
         if (false) {
             // Integer division cannot overflow
         }
-        std::stringstream ss;
-        ss << result;
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, ss.str());
+        return factory.createOperand(ResultOpType, std::to_string(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -244,13 +242,12 @@ class AbstractOperand : public IOperand {
         ResultValueT lhsv = (ResultValueT) this->value;
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
-        bool check;
         if (rhsv == 0) {
             throw Div0Error();
         }
-        check = lhsv % rhsv;  // Integer division cannot overflow
-        if (check) {
-            throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
+        result = lhsv % rhsv;
+        if (false) {
+            // Integer modulo cannot overflow
         }
         OperandFactory factory{};
         return factory.createOperand(ResultOpType, std::to_string(result));
