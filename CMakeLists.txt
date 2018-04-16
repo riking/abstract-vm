@@ -29,7 +29,6 @@ target_sources(abstract-vm PRIVATE
 	src/IOperand.hpp
 	src/OperandType.cpp
 	src/OperandType.hpp
-	src/AbstractOperand.cpp
 	src/AbstractOperand.hpp
 	src/OperandFactory.hpp
 	src/OperandFactory.cpp
