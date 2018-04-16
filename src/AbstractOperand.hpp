@@ -112,7 +112,7 @@ class AbstractOperand : public IOperand {
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         result = lhsv + rhsv;
-        if (std::isinf(result)) {
+        if (std::isinf(result) || std::isnan(result)) {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
         }
         OperandFactory factory{};
@@ -149,7 +149,7 @@ class AbstractOperand : public IOperand {
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         result = lhsv - rhsv;
-        if (std::isinf(result)) {
+        if (std::isinf(result) || std::isnan(result)) {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
         }
         OperandFactory factory{};
@@ -186,7 +186,7 @@ class AbstractOperand : public IOperand {
         ResultValueT rhsv = (ResultValueT)rhs.get();
         ResultValueT result = 0;
         result = lhsv * rhsv;
-        if (std::isinf(result)) {
+        if (std::isinf(result) || std::isnan(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
         }
         OperandFactory factory{};
@@ -228,7 +228,7 @@ class AbstractOperand : public IOperand {
             throw Div0Error();
         }
         result = lhsv / rhsv;
-        if (std::isinf(result)) {
+        if (std::isinf(result) || std::isnan(result)) {
             throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
         }
         OperandFactory factory{};
@@ -277,7 +277,7 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         result = fmodf(lhsv, rhsv);
-        if (std::isinf(result)) {
+        if (std::isinf(result) || std::isnan(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         OperandFactory factory{};
@@ -301,7 +301,7 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         result = fmod(lhsv, rhsv);
-        if (std::isinf(result)) {
+        if (std::isinf(result) || std::isnan(result)) {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         OperandFactory factory{};
