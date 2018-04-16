@@ -58,13 +58,7 @@ class AbstractOperand : public IOperand {
         if (as_string.get()) {
             return *as_string;
         }
-        std::stringstream ss;
-        if (Type == eOperandType::INT_8) {
-            ss << (int)value;
-        } else {
-            ss << value;
-        }
-        as_string = std::make_unique<std::string>(ss.str());
+        as_string = std::make_unique<std::string>(std::to_string(value));
         return *as_string;
     }
 

@@ -6,7 +6,7 @@
 #    By: kyork <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/09 13:08:18 by kyork             #+#    #+#              #
-#    Updated: 2018/04/16 12:59:07 by kyork            ###   ########.fr        #
+#    Updated: 2018/04/16 13:21:30 by kyork            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,11 @@ NAME = abstract-vm
 
 CLANGFORMAT ?= clang-format
 
-$(NAME): Build/abstract-vm
-	cp $^ $@
+$(NAME): Build/Makefile src/*.cpp src/*.hpp
+	make -C Build $(NAME)
+	cp Build/abstract-vm abstract-vm
 
 all: $(NAME)
-
-Build/abstract-vm: Build/Makefile
-	make -C Build $(NAME)
 
 Build/Makefile: CMakeLists.txt
 	mkdir -p Build

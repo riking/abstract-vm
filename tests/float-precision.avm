@@ -9,6 +9,25 @@ add
 push float(1)
 add
 assert float(33554432)
+push float(2)
+add
+dump
+assert float(33554432)
+push float(3)
+add
+dump
+assert float(33554436)
+push double(1)
+add
+assert double(33554437)
 
 dump
+push int8(79)
+print
+push int8(75)
+print
+sub
+push int8(6)
+add
+print
 exit
