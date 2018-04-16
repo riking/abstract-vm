@@ -12,6 +12,7 @@
 #include "OperandType.hpp"
 #include "OverflowError.hpp"
 #include "StaticError.hpp"
+#include "StringConverter.hpp"
 
 #include <cmath>
 #include <memory>
@@ -58,7 +59,9 @@ class AbstractOperand : public IOperand {
         if (as_string.get()) {
             return *as_string;
         }
-        as_string = std::make_unique<std::string>(std::to_string(value));
+        StringConverter conv{};
+        std::string tmp_string = conv.MakeString(value);
+        as_string = std::make_unique<std::string>(tmp_string);
         return *as_string;
     }
 
@@ -95,7 +98,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -112,7 +116,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::ADD, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -130,7 +135,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -147,7 +153,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::SUB, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -165,7 +172,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -182,7 +190,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::MUL, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -202,7 +211,8 @@ class AbstractOperand : public IOperand {
             // Integer division cannot overflow
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -222,7 +232,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::DIV, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     };
 
     // Modulo
@@ -244,7 +255,8 @@ class AbstractOperand : public IOperand {
             // Integer modulo cannot overflow
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     }
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -269,7 +281,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     };
 
     template <eOperandType RhsOpType, typename RHSValueT>
@@ -292,7 +305,8 @@ class AbstractOperand : public IOperand {
             throw OverflowError(this, &rhs, eInstructionType::MOD, ResultOpType);
         }
         OperandFactory factory{};
-        return factory.createOperand(ResultOpType, std::to_string(result));
+        StringConverter conv{};
+        return factory.createOperand(ResultOpType, conv.MakeString(result));
     };
 
     ValueT value;

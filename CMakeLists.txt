@@ -32,6 +32,8 @@ target_sources(abstract-vm PRIVATE
 	src/AbstractOperand.hpp
 	src/OperandFactory.hpp
 	src/OperandFactory.cpp
+	src/StringConverter.hpp
+	src/StringConverter.cpp
 	)
 
 target_sources(abstract-vm PRIVATE
