@@ -6,7 +6,7 @@
 #    By: kyork <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/09 13:08:18 by kyork             #+#    #+#              #
-#    Updated: 2018/04/16 17:04:00 by kyork            ###   ########.fr        #
+#    Updated: 2018/04/16 17:07:26 by kyork            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,4 +41,4 @@ format:
 	$(CLANGFORMAT) -style=file -i src/*.cpp src/*.hpp
 
 test:
-	for file in tests/*.avm; do echo $$file; ./abstract-vm $$file; done
+	for file in tests/*.avm; do echo $$file; ./abstract-vm $$file; echo exit status $$?; done
