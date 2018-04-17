@@ -99,12 +99,12 @@ IOperand const *OperandFactory::createFloat(std::string const &value) const {
     if (val_end_idx != value.size()) {
         throw NumberParseError(value, "Extra content after numeric value");
     }
-	if (std::isinf(val_f)) {
-		throw NumberParseError(value, "Infinite value for float");
-	}
-	if (std::isnan(val_f)) {
-		throw NumberParseError(value, "Not-a-number value for float");
-	}
+    if (std::isinf(val_f)) {
+        throw NumberParseError(value, "Infinite value for float");
+    }
+    if (std::isnan(val_f)) {
+        throw NumberParseError(value, "Not-a-number value for float");
+    }
     return new Float(val_f);
 }
 
@@ -121,11 +121,11 @@ IOperand const *OperandFactory::createDouble(std::string const &value) const {
     if (val_end_idx != value.size()) {
         throw NumberParseError(value, "Extra content after numeric value");
     }
-	if (std::isinf(val_d)) {
-		throw NumberParseError(value, "Infinite value for double");
-	}
-	if (std::isnan(val_d)) {
-		throw NumberParseError(value, "Not-a-number value for double");
-	}
+    if (std::isinf(val_d)) {
+        throw NumberParseError(value, "Infinite value for double");
+    }
+    if (std::isnan(val_d)) {
+        throw NumberParseError(value, "Not-a-number value for double");
+    }
     return new Double(val_d);
 }
